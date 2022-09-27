@@ -18,21 +18,6 @@ namespace ProjectCodeX.Controllers
             return View();
         }
 
-        public IActionResult News()
-        {
-            return View();
-        }
-
-        public IActionResult Events()
-        {
-            return View();
-        }
-
-        public IActionResult UserProfile()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
@@ -41,7 +26,13 @@ namespace ProjectCodeX.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ErrorViewModel error = new ErrorViewModel 
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier 
+            };
+            _logger.LogError($"Error with RequestId:{error.RequestId}", error);
+
+            return View();
         }
     }
 }
