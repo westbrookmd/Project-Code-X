@@ -5,6 +5,12 @@ namespace ProjectCodeX.Controllers
 {
     public class EventController : Controller
     {
+        private readonly ILogger _logger;
+
+        public EventController(ILogger<EventController> logger)
+        {
+            _logger = logger;
+        }
         // GET: EventController
         public ActionResult Index()
         {

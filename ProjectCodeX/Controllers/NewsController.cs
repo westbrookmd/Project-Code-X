@@ -5,6 +5,12 @@ namespace ProjectCodeX.Controllers
 {
     public class NewsController : Controller
     {
+        private readonly ILogger<NewsController> _logger;
+
+        public NewsController(ILogger<NewsController> logger)
+        {
+            _logger = logger;
+        }
         // GET: News
         public ActionResult Index()
         {
