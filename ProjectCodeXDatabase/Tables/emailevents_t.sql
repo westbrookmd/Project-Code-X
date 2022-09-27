@@ -1,12 +1,12 @@
 CREATE TABLE [dbo].[emailevents_t]
 (
-	EventID int primary key,
-	Date date,
-	Time time,
-	Location varchar(50),
-	EventType varchar(50),
-	Attendees#  int,
-	AmountRaised smallmoney,
-	Cost smallmoney,
-	Notes varchar(500)
+	EventID 	int Not Null primary key,
+	Date 		date Null,
+	Time 		time Null,
+	Location 	varchar(50) Null,
+	EventType 	varchar(50) Null,
+	Attendees#  	int Null,
+	AmountRaised 	smallmoney Null,
+	Cost 		smallmoney Null,
+	Notes 		varchar(500) Null
 )
