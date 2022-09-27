@@ -1,9 +1,9 @@
 CREATE TABLE [dbo].[news_t]
 (
-	ArticleID int primary key,
-	PublishDate date,
-	Type varchar(30),
-	Link varchar(100),
-	ViewCount int,
-	Author varchar(40)
+	ArticleID 	int Not Null primary key,
+	PublishDate 	date Null,
+	Type 		varchar(30) Null,
+	Link 		varchar(100) Null,
+	ViewCount 	int Null,
+	Author 		varchar(40) Null
 )
