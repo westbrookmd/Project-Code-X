@@ -62,5 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\users_t.sql" />
+    <Build Include="Tables\emailevents_t.sql" />
+    <Build Include="Tables\news_t.sql" />
+    <Build Include="Tables\transaction_t.sql" />
   </ItemGroup>
 </Project>
