@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[emailevents_t]
 	Time 		time Null,
 	Location 	varchar(50) Null,
 	EventType 	varchar(50) Null,
-	Attendees#  	int Null,
+	[Attendees]  	int Null,
 	AmountRaised 	smallmoney Null,
 	Cost 		smallmoney Null,
 	Notes 		varchar(500) Null
