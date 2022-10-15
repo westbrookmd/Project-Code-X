@@ -1,6 +1,10 @@
+using DataAccess.Data;
+using DataAccess.DbAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectCodeX.Data;
+using ProjectCodeX.Managers;
+using ProjectCodeX.Models;
 
 namespace ProjectCodeX
 {
@@ -24,7 +28,10 @@ namespace ProjectCodeX
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
+            builder.Services.AddTransient<IEventData, EventData>();
+            builder.Services.AddTransient<EventMgr>();
+            builder.Services.AddTransient<EventViewModel>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

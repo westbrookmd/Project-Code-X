@@ -65,5 +65,9 @@
     <Build Include="Tables\emailevents_t.sql" />
     <Build Include="Tables\news_t.sql" />
     <Build Include="Tables\transaction_t.sql" />
+    <Build Include="Stored Procedures\spEvent_Get.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Stored Procedures\spEvent_GetAll.sql" />
   </ItemGroup>
 </Project>

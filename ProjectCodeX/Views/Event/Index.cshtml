@@ -6,7 +6,12 @@
     todo: create page with overviews of events
     todo: adjust this view to pull details of a requested event from outside source instead of creating a new page for each article
 -->
-
+    <form asp-controller="Event" asp-action="Get" method="get">
+        <p>
+        Event ID: <input type="int" name="id" />
+        <input type="submit" value="Search" />
+        </p>
+    </form>
 <div class="upcomingEvents">
     @for (var i = 0; i < Model.Events.Count(); i++)
     {
