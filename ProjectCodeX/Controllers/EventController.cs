@@ -1,18 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCodeX.Managers;
 using ProjectCodeX.Models;
+using System.Diagnostics;
+using System.Net;
 
 namespace ProjectCodeX.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
         private readonly ILogger _logger;
+        private readonly EventMgr _mgr;
+        private readonly EventViewModel _viewModel;
 
-        public EventController(ILogger<EventController> logger)
+        public EventController(ILogger<EventController> logger, EventMgr mgr, EventViewModel viewModel)
         {
             _logger = logger;
+            _mgr = mgr;
+            _viewModel = viewModel;
         }
-        // GET: EventController
+        // GET: Event
         public ActionResult Index()
         {
             //Create a list of event samples
@@ -33,28 +42,39 @@ namespace ProjectCodeX.Controllers
                 });
             }
             //Create our view model temporarily for testing. This will move into dependency injection (I think)
-            EventViewModel eventViewModel = new EventViewModel()
-            {
-                Events = events,
-            };
-            
-
-            return View(eventViewModel);
+            _viewModel.Events = events;
+            return View(_viewModel);
         }
 
-        // GET: EventController/Details/5
-        public ActionResult Details(int id)
+        // GET: Event/Get/5
+        public ActionResult Get(int id)
         {
-            return View();
+            
+            Event eventFromDb = _mgr.GetEvent(id);
+            if (eventFromDb is not null)
+            {
+                _viewModel.Events = new()
+                {
+                    eventFromDb!
+                };
+                return View(_viewModel);
+            }
+            else
+            {
+                ModelState.AddModelError("Events", "Unable to retrieve event. Please try again.");
+                _viewModel.Events = new();
+                return View(_viewModel);
+            }
+            
         }
 
-        // GET: EventController/Create
+        // GET: Event/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EventController/Create
+        // POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -69,24 +89,24 @@ namespace ProjectCodeX.Controllers
             }
         }
 
-        // GET: EventController/Edit/5
+        // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: EventController/Edit/5
+        // POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return View(_viewModel);
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
