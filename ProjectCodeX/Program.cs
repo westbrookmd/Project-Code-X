@@ -26,6 +26,7 @@ namespace ProjectCodeX
                     options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireNonAlphanumeric = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -109,10 +110,10 @@ namespace ProjectCodeX
                         }
                         else
                         {
-                            var roles = userManager.GetRolesAsync(userInDB).Result;
-                            if (!roles.Contains("Admin"))
+                            var roles = userManager.GetRolesAsync(userInDB);
+                            if (!userManager.IsInRoleAsync(userInDB, "Admin").Result)
                             {
-                                userManager.AddToRoleAsync(adminUser, "Admin");
+                                userManager.AddToRoleAsync(userInDB, adminRole.Name);
                             }
                         }
                     }
@@ -127,7 +128,7 @@ namespace ProjectCodeX
                 if (professorUser != null)
                 {
                     var roles = userManager.GetRolesAsync(professorUser).Result;
-                    if (!roles.Contains("Admin"))
+                    if (!userManager.IsInRoleAsync(professorUser, "Admin").Result)
                     {
                         userManager.AddToRoleAsync(professorUser, "Admin");
                     }
