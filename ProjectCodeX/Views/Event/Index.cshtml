@@ -94,7 +94,7 @@
         </p>
     </form>
 <div class="upcomingEvents">
-    @for (var i = 0; i < Model.Events.Count(); i++)
+    @for (var i = 0; i < Model.Events.Count; i++)
     {
         Event e = Model.Events[i];
         <h1 id="title">Event Title: @e.EventID</h1>
