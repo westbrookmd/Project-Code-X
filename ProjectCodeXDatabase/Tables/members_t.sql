@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[emailevents_t]
+CREATE TABLE [dbo].[members_t]
 (
 	UserID 	int Not Null foreign key,
 	Due     smallmoney Null,
