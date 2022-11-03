@@ -96,7 +96,7 @@ function showCalendar(month, year) {
                 cell.setAttribute("data-year", year);
                 cell.setAttribute("data-month_name", months[month]);
                 cell.className = "date-picker";
-                cell.innerHTML = "<span>" + date + "</span>";
+                cell.innerHTML = date;
 
                 if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                     cell.className = "date-picker selected";
@@ -116,3 +116,31 @@ function showCalendar(month, year) {
 function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
 }
+
+//add event listeners to table cells
+//TODO: add code here to check if cell's date has event data listed
+//      add code to give identify cells which correspond to event dates
+//      add code for cells to display basic event info on hover
+//      add code for cells to display detailed event info on click
+document.querySelectorAll("td").forEach(e => e.addEventListener('click', function (event) {
+    if (event.target.style.color === 'red' || event.target.style.color === 'green') {
+        event.target.style.color = 'black';
+    }
+    else {
+        //Apply special formatting to selecting today's date
+        if (e.className === 'date-picker selected') {
+            event.target.style.color = 'green';
+        }
+        else {
+            event.target.style.color = 'red';
+        }
+    }
+}));
+
+document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseover', function onMouseOver(event) {
+    event.target.style.backgroundColor = 'lightblue';
+}));
+
+document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseout', function onMouseOut(event) {
+    event.target.style.backgroundColor = null;
+}));
