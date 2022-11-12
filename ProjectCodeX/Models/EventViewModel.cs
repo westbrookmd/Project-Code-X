@@ -2,6 +2,7 @@
 {
     public class EventViewModel
     {
-        public List<Event> Events { get; set; }
+        public List<Event>? Events { get; set; }
+        public Event? EventDetail { get; set; }
     }
 }

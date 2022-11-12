@@ -1,6 +1,6 @@
-CREATE TABLE [dbo].[emailevents_t]
+CREATE TABLE [dbo].[events_t]
 (
-	EventID 	int Not Null primary key,
+	EventID 	int Not Null primary key IDENTITY,
 	Date 		date Null,
 	Time 		time Null,
 	Location 	varchar(50) Null,

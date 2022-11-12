@@ -1,0 +1,38 @@
+﻿@model ProjectCodeX.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>EventViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="POST">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <p>
+                    Date: <input type="date" name="Date" />
+                    Time: <input type="time" name="Time" />
+                    Location: <input type="text" name="Location" />
+                    Type: <input type="text" name="Type" />
+                    NumberOfAttendees: <input type="number" name="NumberOfAttendees" />
+                    AmountRaised: <input type="number" name="AmountRaised" />
+                    Cost: <input type="number" name="Cost" />
+                    Notes: <input type="text" name="Notes" />
+                </p>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

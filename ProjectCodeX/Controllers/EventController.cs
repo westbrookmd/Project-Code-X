@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectCodeX.Managers;
@@ -33,6 +34,7 @@ namespace ProjectCodeX.Controllers
                 {
                     EventID = i,
                     Date = DateTime.Now,
+                    Time = DateTime.Now,
                     Location = "City, State",
                     Type = "EventType",
                     NumberOfAttendees = i * 10,
@@ -71,34 +73,42 @@ namespace ProjectCodeX.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
-            return View();
+            
+            
+            return View(_viewModel);
         }
 
         // POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Event eventData)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var result = _mgr.InsertEventAsync(eventData).Result;
+                    return RedirectToAction("Index");
+                }
+                return View(_viewModel);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError(ex.Message, ex.StackTrace);
+                return View(_viewModel);
             }
         }
 
-        // GET: Event/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Event/Update/5
+        public ActionResult Update(int id)
         {
             return View();
         }
 
-        // POST: Event/Edit/5
+        // POST: Event/Update/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Update(int id, IFormCollection collection)
         {
             try
             {

@@ -32,6 +32,7 @@ namespace ProjectCodeX
             builder.Services.AddTransient<IEventData, EventData>();
             builder.Services.AddTransient<EventMgr>();
             builder.Services.AddTransient<EventViewModel>();
+            builder.Services.AddTransient<NewsViewModel>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

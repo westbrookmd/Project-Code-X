@@ -1,4 +1,15 @@
 ﻿<link rel="stylesheet" href="~/css/news.css" />
+@for (var i = 0; i < Model.Posts.Count; i++)
+{
+    NewsPost e = Model.Posts[i];
+    <h1 id="title">Article ID: @e.ArticleID</h1>
+    <p>Type: @e.Type</p>
+
+    <p>Sed in risus non turpis euismod consectetur. Morbi iaculis vestibulum laoreet. Integer et consectetur neque, at lobortis dolor. Donec nec rhoncus lorem. Donec tortor dui, ornare facilisis orci vel, finibus pellentesque erat. Aliquam turpis risus, accumsan in lacus id, aliquam faucibus mauris. Praesent aliquam vehicula turpis, vitae volutpat ipsum. Duis dignissim, mauris et interdum lobortis, augue metus eleifend dui, ut rhoncus orci dolor molestie libero. Aenean egestas justo quam, sed mattis nibh vulputate nec.</p>
+
+    <p>Nunc ut odio sed nisi lobortis tempor ut in urna. Nam aliquet nisi eu tempor congue. Curabitur nec velit in eros porta bibendum nec sed nibh. Quisque mollis vel magna sed vehicula. Donec ornare odio felis, nec varius eros consequat ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In elit tellus, aliquet ac risus ac, egestas dignissim augue. Vestibulum luctus ante vitae nibh elementum, ut congue quam mattis. Nam vitae libero accumsan, convallis ante non, tempus dui. In non mi varius, dignissim metus vel, hendrerit nisi. Suspendisse ac erat dolor. Vestibulum in dolor nulla. Vivamus dapibus tempus turpis, sed maximus turpis interdum eu. Aliquam erat volutpat. Suspendisse eget est et augue volutpat cursus vitae eu augue.</p>
+
+}
 
 <section class="recentNews">
     <div class="container">
