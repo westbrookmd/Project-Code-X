@@ -1,104 +1,18 @@
-<link rel="stylesheet" href="~/css/events.css" />
+﻿@model ProjectCodeX.Models.EventViewModel
+@{
+}
 
+<!--
+    todo: create page with overviews of events
+    todo: adjust this view to pull details of a requested event from outside source instead of creating a new page for each article
+-->
 
-<h2 class="month">October 2022</h2>
-<br />
-<table>
-    <thead>
-        <tr>
-            <th>
-                Sun
-            </th>
-            <th>
-                Mon
-            </th>
-            <th>
-                Tue
-            </th>
-            <th>
-                Wed
-            </th>
-            <th>
-                Thu
-            </th>
-            <th>
-                Fri
-            </th>
-            <th>
-                Sat
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="otherMonth">25</td>
-            <td class="otherMonth">26</td>
-            <td class="otherMonth">27</td>
-            <td class="otherMonth">28</td>
-            <td class="otherMonth">29</td>
-            <td class="otherMonth">30</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-        </tr>
-        <tr>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-            <td>22</td>
-        </tr>
-        <tr>
-            <td>23</td>
-            <td>24</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-            <td>29</td>
-        </tr>
-        <tr>
-            <td>30</td>
-            <td>31</td>
-            <td class="otherMonth">1</td>
-            <td class="otherMonth">2</td>
-            <td class="otherMonth">3</td>
-            <td class="otherMonth">4</td>
-            <td class="otherMonth">5</td>
-        </tr>
-    </tbody>
-</table>
-
-    <form asp-controller="Event" asp-action="Get" method="get">
-        <p>
-        Event ID: <input type="number" name="id" />
-        <input type="submit" value="Search" />
-        </p>
-    </form>
 <div class="upcomingEvents">
-    @for (var i = 0; i < Model.Events.Count; i++)
+    @for (var i = 0; i < Model.Events.Count(); i++)
     {
         Event e = Model.Events[i];
         <h1 id="title">Event Title: @e.EventID</h1>
-        <p>Event Date: @e.Date.ToShortDateString() @e.Time.TimeOfDay</p>
+        <p>Event Date: @e.Date</p>
         <p>Details: <b>Location:</b> @e.Location <b>Type:</b> @e.Type <b>Number of Attendees:</b> @e.NumberOfAttendees <b>Amount Raised:</b> @e.AmountRaised  <b>Cost:</b> @e.Cost <b>Notes:</b> @e.Notes</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet elit fermentum lectus pharetra posuere. Aliquam at dui lorem. Nunc imperdiet pharetra odio, a condimentum nulla dapibus non. Pellentesque posuere orci ac lectus iaculis pulvinar. Fusce lacinia pretium efficitur. Phasellus vehicula metus vitae suscipit pellentesque. Vestibulum vestibulum vulputate est, et auctor justo congue ut. Morbi ultricies at mi vitae pellentesque. Nam non massa eget leo varius convallis. Curabitur egestas, augue in tristique aliquet, nulla felis finibus elit, aliquam mattis quam justo at felis. Sed dignissim consequat mauris vitae interdum. Sed quis tincidunt lorem. Maecenas tristique condimentum ante, non porttitor turpis volutpat mattis. Nunc eleifend justo et nunc tincidunt suscipit. Pellentesque egestas, sapien sit amet pulvinar congue, quam est rhoncus lorem, et pretium lacus neque ut diam. Pellentesque placerat, est a varius viverra, dui elit viverra lectus, non luctus velit sem nec enim.</p>
 
@@ -107,5 +21,4 @@
         <p>Nunc ut odio sed nisi lobortis tempor ut in urna. Nam aliquet nisi eu tempor congue. Curabitur nec velit in eros porta bibendum nec sed nibh. Quisque mollis vel magna sed vehicula. Donec ornare odio felis, nec varius eros consequat ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In elit tellus, aliquet ac risus ac, egestas dignissim augue. Vestibulum luctus ante vitae nibh elementum, ut congue quam mattis. Nam vitae libero accumsan, convallis ante non, tempus dui. In non mi varius, dignissim metus vel, hendrerit nisi. Suspendisse ac erat dolor. Vestibulum in dolor nulla. Vivamus dapibus tempus turpis, sed maximus turpis interdum eu. Aliquam erat volutpat. Suspendisse eget est et augue volutpat cursus vitae eu augue.</p>
 
     }
-    </div>
-
+</div>

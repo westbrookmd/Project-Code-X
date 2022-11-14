@@ -1,0 +1,8 @@
+﻿/*
+    TODO: Find good colors for the calendar to use
+*/
+
+td.otherMonth {
+    background-color:darkgrey;
+    color:lightgrey;
+}
