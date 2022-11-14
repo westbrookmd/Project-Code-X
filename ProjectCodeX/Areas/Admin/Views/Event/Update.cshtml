@@ -1,0 +1,26 @@
+﻿<!--Update Events Table on Database-->
+
+<div class="event-Form">
+    <form id="eventForm">
+        <label for="eventName">Event Name: </label><br />
+        <input type="text" id="eventName" name="eventName" required /><br />
+
+        <label for="eventDate">Event Date and Time: </label><br />
+        <input type="datetime-local" id="eventDate" name="eventDate" required /><br />
+
+        <label for="location">Location: </label><br />
+        <input type="text" id="location" name="location" value="TBD" /><br />
+
+        <!--TODO: Determine Event Types to be used, add values to form as radio buttons-->
+        <input type="radio" id="" name="eventType" value="" />
+        <label for="">Placeholder</label>
+
+        <label for="notes">Additional Notes: </label><br />
+        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements."></textarea>
+
+        <input type="hidden" id="eventID" name="eventID" value="0" />
+        <input type="hidden" id="attendees" name="attendees" value="0" />
+        <input type="hidden" id="amountRaised" name="amountRaised" value="0" />
+        
+    </form>
+</div>

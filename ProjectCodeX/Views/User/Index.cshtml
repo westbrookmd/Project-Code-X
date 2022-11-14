@@ -5,22 +5,80 @@
 <!--
     todo: determine layout of User Profile
     todo: create a User Dashboard where users can select options to view/change their profiles/other information
+    todo: Change H1 heading to display Username instead of User
 -->
 
 <div>
-    <div class="blocks">
-
-        <div class="leftBlock" id="test1">
-            <p>This section should be placed on the left-hand side of the page.</p>
-        </div>
-
-        <div class="centerBlock" id="test1">
-            <p>This section should be between the left and right blocks and below the top block.</p>
-        </div>
-
-        <div class="rightBlock" id="test1">
-            <p>This section should be placed on the right-hand side of the page.</p>
-        </div>
-
-    </div>
+    <h1>Welcome User!</h1>
+    <form>
+        <label for="uName">User Name:</label><br />
+        <input type="text" id="UserName" name="uName" value=" " readonly /><br />
+        <label for="uID">User ID:</label><br />
+        <input type="text" id="UserID" name="uID" value="01" readonly /><br />
+        <label for="fName">First Name:</label><br />
+        <input type="text" id="fName" name="fName" value="John" /><br />
+        <label for="lName">Last Name:</label><br />
+        <input type="text" id="lName" name="lName" value="Doe" /><br />
+        <label for="address">Address:</label><br />
+        <input type="text" id="address" name="address" value=" " /><br />
+        <label for="city">City:</label><br />
+        <input type="text" id="city" name="city" value=" " /><br />
+        <label for="state">State:</label><br />
+        <input list="states">
+        <datalist id="states">
+            <option value="AL"></option>
+            <option value="AK"></option>
+            <option value="AZ"></option>
+            <option value="AR"></option>
+            <option value="CA"></option>
+            <option value="CO"></option>
+            <option value="CT"></option>
+            <option value="DE"></option>
+            <option value="DC"></option>
+            <option value="FL"></option>
+            <option value="GA"></option>
+            <option value="HI"></option>
+            <option value="ID"></option>
+            <option value="IL"></option>
+            <option value="IN"></option>
+            <option value="IA"></option>
+            <option value="KS"></option>
+            <option value="KY"></option>
+            <option value="LA"></option>
+            <option value="ME"></option>
+            <option value="MD"></option>
+            <option value="MA"></option>
+            <option value="MI"></option>
+            <option value="MN"></option>
+            <option value="MS"></option>
+            <option value="MO"></option>
+            <option value="MT"></option>
+            <option value="NE"></option>
+            <option value="NV"></option>
+            <option value="NH"></option>
+            <option value="NJ"></option>
+            <option value="NM"></option>
+            <option value="NY"></option>
+            <option value="NC"></option>
+            <option value="ND"></option>
+            <option value="OH"></option>
+            <option value="OK"></option>
+            <option value="OR"></option>
+            <option value="PA"></option>
+            <option value="RI"></option>
+            <option value="SC"></option>
+            <option value="SD"></option>
+            <option value="TN"></option>
+            <option value="TX"></option>
+            <option value="UT"></option>
+            <option value="VT"></option>
+            <option value="VA"></option>
+            <option value="WA"></option>
+            <option value="WV"></option>
+            <option value="WI"></option>
+            <option value="WY"></option>
+        </datalist><br />
+        <label for="zip">ZIP Code:</label><br />
+        <input type="text" id="zip" name="zip" value="12345" /><br />
+    </form>
 </div>
