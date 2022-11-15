@@ -1,8 +1,9 @@
-CREATE TABLE [dbo].[transaction_t]
-(
-	TransID 	int Not Null primary key,
-	UserID		int Not Null,
-	TransType	varchar(20) Null,
-	Amount 		smallmoney Null,
-	Notes 		varchar(500) Null
-)
+﻿CREATE TABLE [dbo].[transaction_t] (
+    [TransID]   INT           NOT NULL,
+    [TransType] VARCHAR (20)  NULL,
+    [Amount]    SMALLMONEY    NULL,
+    [Notes]     VARCHAR (500) NULL,
+    PRIMARY KEY CLUSTERED ([TransID] ASC)
+);
+
+

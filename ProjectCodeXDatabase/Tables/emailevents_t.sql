@@ -1,12 +1,15 @@
-CREATE TABLE [dbo].[emailevents_t]
-(
-	EventID 	int Not Null primary key,
-	Date 		date Null,
-	Time 		time Null,
-	Location 	varchar(50) Null,
-	EventType 	varchar(50) Null,
-	[Attendees]  	int Null,
-	AmountRaised 	smallmoney Null,
-	Cost 		smallmoney Null,
-	Notes 		varchar(500) Null
-)
+﻿CREATE TABLE [dbo].[emailevents_t] (
+    [EventID]      INT           NOT NULL,
+    [Date]         DATE          NULL,
+    [Time]         TIME (7)      NULL,
+    [Location]     VARCHAR (50)  NULL,
+    [EventType]    VARCHAR (50)  NULL,
+    [Attendees]    INT           NULL,
+    [AmountRaised] SMALLMONEY    NULL,
+    [Cost]         SMALLMONEY    NULL,
+    [Notes]        VARCHAR (500) NULL,
+    [EventName]    VARCHAR (25)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([EventID] ASC)
+);
+
+
