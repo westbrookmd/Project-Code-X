@@ -1,6 +1,7 @@
 CREATE TABLE [dbo].[members_t]
 (
-	UserID 	int Not Null foreign key REFERENCES Users(UserID),
-	Due     smallmoney Null,
-	Balance 	smallmoney Null
+	[UserID] 	INT NOT NULL,
+	[Due]     smallmoney NULL,
+	[Balance] 	smallmoney NULL
+	FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID])
 )
