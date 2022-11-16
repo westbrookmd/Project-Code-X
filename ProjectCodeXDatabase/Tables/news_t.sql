@@ -6,4 +6,5 @@ CREATE TABLE [dbo].[news_t]
 	Link 		varchar(100) Null,
 	ViewCount 	int Null,
 	Author 		varchar(40) Null
-)
+	PRIMARY KEY CLUSTERED ([ArticleID] ASC)
+);
