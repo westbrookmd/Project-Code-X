@@ -22,7 +22,7 @@ namespace ProjectCodeX.Controllers
             _viewModel = viewModel;
         }
         // GET: Event
-        public ActionResult Index()
+        public IActionResult Index()
         {
             //Create a list of event samples
             List<Event> events = new();
@@ -47,7 +47,7 @@ namespace ProjectCodeX.Controllers
         }
 
         // GET: Event/Get/5
-        public ActionResult Get(int id)
+        public IActionResult Get(int id)
         {
             
             Event eventFromDb = _mgr.GetEvent(id);
@@ -66,69 +66,6 @@ namespace ProjectCodeX.Controllers
                 return View(_viewModel);
             }
             
-        }
-
-        // GET: Event/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Event/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Event/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Event/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return View(_viewModel);
-            }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-
-        // GET: EventController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EventController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

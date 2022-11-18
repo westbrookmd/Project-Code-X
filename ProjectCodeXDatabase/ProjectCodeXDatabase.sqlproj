@@ -59,8 +59,6 @@
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Views" />
-    <Folder Include="dbo\" />
-    <Folder Include="dbo\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\emailevents_t.sql" />
@@ -68,13 +66,11 @@
     <Build Include="Tables\transaction_t.sql" />
     <Build Include="Stored Procedures\spEvent_Get.sql" />
     <Build Include="Tables\members_t.sql" />
-    <Build Include="Tables\purchase_t.sql" />
-    <Build Include="Tables\purchLineItems_t.sql" />
     <Build Include="Tables\Contacts.sql" />
     <Build Include="Tables\Donations.sql" />
     <Build Include="Tables\Purchase.sql" />
-    <Build Include="Tables\PurcLineItems.sql" />
-    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="Tables\PurchLineItems.sql" />
+    <Build Include="Tables\Users.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Stored Procedures\spEvent_GetAll.sql" />
