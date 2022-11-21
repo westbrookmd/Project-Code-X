@@ -19,7 +19,7 @@ namespace ProjectCodeX.Controllers
             _viewModel = viewModel;
         }
         // GET: News
-        public ActionResult Index()
+        public IActionResult Index()
         {
             _viewModel.Posts = _dbContext.Posts.ToList();
             return View(_viewModel);

@@ -14,6 +14,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Status = "Admin";
             return View();
         }
 

@@ -8,34 +8,32 @@ namespace ProjectCodeX.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class EventController : Controller
     {
-        private readonly ILogger _logger;
+        [Route("[area]/[controller]/{id?}")]
 
-        public EventController(ILogger<EventController> logger)
-        {
-            _logger = logger;
-        }
         // GET: EventController
-        public ActionResult Index()
+        public IActionResult Index()
         {
+            ViewBag.Status = "Admin";
             return View();
         }
 
         // GET: EventController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
+
             return View();
         }
 
         // GET: EventController/Create
-        public ActionResult Create()
+        public IActionResult Add()
         {
-            return View();
+            return Edit(0);
         }
 
         // POST: EventController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Add(IFormCollection collection)
         {
             try
             {
@@ -48,7 +46,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
         }
 
         // GET: EventController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             return View();
         }
@@ -56,7 +54,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
         // POST: EventController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -69,7 +67,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
         }
 
         // GET: EventController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -77,7 +75,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
         // POST: EventController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

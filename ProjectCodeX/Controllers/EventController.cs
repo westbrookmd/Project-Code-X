@@ -23,7 +23,7 @@ namespace ProjectCodeX.Controllers
             _viewModel = viewModel;
         }
         // GET: Event
-        public ActionResult Index()
+        public IActionResult Index()
         {
             //Create a list of event samples
             List<Event> events = new();
@@ -49,7 +49,7 @@ namespace ProjectCodeX.Controllers
         }
 
         // GET: Event/Get/5
-        public ActionResult Get(int id)
+        public IActionResult Get(int id)
         {
             
             Event eventFromDb = _mgr.GetEvent(id);

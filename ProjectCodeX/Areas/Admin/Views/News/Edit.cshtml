@@ -1,0 +1,30 @@
+﻿<!--
+    TODO: Field for publish date should show the date article was published. If adding new article, value should equal today's date
+-->
+
+<div class="news-Form">
+    <form id="newsForm">
+        
+        <div class="form-group">
+            <label for="headline">Headline: </label><br />
+            <input type="text" id="headline" name="headline" required />
+        </div>
+
+        <label for="content">Article content: </label><br />
+        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required></textarea>
+
+        <div class="form-group">
+        <label for="newsImage">Image: </label><br />
+        <input type="image" id="newsImage" name="newsImage" />
+        </div>
+
+        <div class="form-group">
+            <label for="author">Author: </label><br />
+            <input type="text" id="author" name="author" required placeholder="Please insert your first and last name. Ex: John Doe" />
+        </div>
+
+        <input type="hidden" id="PublishDate" name="PublishDate" value="Today" />
+        <input type="hidden" id="articleID" name="articleID" value="0" />
+        <input type="hidden" id="viewCount" name="viewCount" value="0" />
+    </form>
+</div>
