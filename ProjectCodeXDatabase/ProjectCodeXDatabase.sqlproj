@@ -61,10 +61,7 @@
     <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\users_t.sql" />
-    <Build Include="Tables\emailevents_t.sql" />
     <Build Include="Tables\news_t.sql" />
-    <Build Include="Tables\transaction_t.sql" />
     <Build Include="Stored Procedures\spEvent_Get.sql" />
     <Build Include="Tables\members_t.sql" />
     <Build Include="Tables\Contacts.sql" />
@@ -72,8 +69,13 @@
     <Build Include="Tables\Purchase.sql" />
     <Build Include="Tables\PurchLineItems.sql" />
     <Build Include="Tables\Users.sql" />
+    <Build Include="Stored Procedures\spEvent_Insert.sql" />
+    <Build Include="Tables\events_t.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Stored Procedures\spEvent_GetAll.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ProjectCodeXDatabase.refactorlog" />
   </ItemGroup>
 </Project>

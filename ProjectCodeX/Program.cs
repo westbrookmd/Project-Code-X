@@ -37,6 +37,7 @@ namespace ProjectCodeX
             builder.Services.AddTransient<EventMgr>();
             builder.Services.AddTransient<EventViewModel>();
             builder.Services.AddTransient<NewsViewModel>();
+            builder.Services.AddTransient<UserViewModel>();
             var app = builder.Build();
 
             CreateAdminUsers(builder, app);

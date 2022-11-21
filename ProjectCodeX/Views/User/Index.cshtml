@@ -1,28 +1,41 @@
-﻿@{
-}
+﻿
 <link rel="stylesheet" href="~/css/news.css" />
-
+@model UserViewModel
 <!--
     todo: determine layout of User Profile
     todo: create a User Dashboard where users can select options to view/change their profiles/other information
     todo: Change H1 heading to display Username instead of User
 -->
+@{
+    User currentUser;
+    string userDisplayValue = "User";
+    if (Model.UserDetail is not null)
+    {
+        currentUser = @Model.UserDetail;
+        userDisplayValue = currentUser.FName;
+    }
+    else
+    {
+        currentUser = new();
+    }
+    
+}
 
 <div>
-    <h1>Welcome User!</h1>
+    <h1>Welcome @userDisplayValue!</h1>
     <form>
         <label for="uName">User Name:</label><br />
-        <input type="text" id="UserName" name="uName" value=" " readonly /><br />
+        <input type="text" id="UserName" name="uName" value="" readonly /><br />
         <label for="uID">User ID:</label><br />
-        <input type="text" id="UserID" name="uID" value="01" readonly /><br />
+        <input type="text" id="UserID" name="uID" value="@currentUser.UserID" readonly /><br />
         <label for="fName">First Name:</label><br />
-        <input type="text" id="fName" name="fName" value="John" /><br />
+        <input type="text" id="fName" name="fName" value="@currentUser.FName" /><br />
         <label for="lName">Last Name:</label><br />
-        <input type="text" id="lName" name="lName" value="Doe" /><br />
+        <input type="text" id="lName" name="lName" value="@currentUser.LName" /><br />
         <label for="address">Address:</label><br />
-        <input type="text" id="address" name="address" value=" " /><br />
+        <input type="text" id="address" name="address" value="@currentUser.Address" /><br />
         <label for="city">City:</label><br />
-        <input type="text" id="city" name="city" value=" " /><br />
+        <input type="text" id="city" name="city" value="@currentUser.City" /><br />
         <label for="state">State:</label><br />
         <input list="states">
         <datalist id="states">

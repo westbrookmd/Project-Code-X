@@ -6,6 +6,7 @@ namespace ProjectCodeX.Models
     {
         public int EventID { get; set; }
         [Required]
+        public string Name { get; set; } = "";
         public DateTime Date { get; set; } //Consolidated into one value for model
         public DateTime Time { get; set; }
         [Required, MinLength(3)]

@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Users] (
     [UserID]  INT          IDENTITY (1, 1) NOT NULL,
+    [UserGUID]VARCHAR (MAX)NOT NULL,
     [FName]   VARCHAR (12) NULL,
     [LName]   VARCHAR (12) NULL,
     [Address] VARCHAR (20) NULL,
