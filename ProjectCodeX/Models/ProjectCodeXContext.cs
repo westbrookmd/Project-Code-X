@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ProjectCodeX.Models
 {
-    public partial class ProjectCodeXContext : IdentityDbContext
+    public partial class ProjectCodeXContext : IdentityDbContext<User>
     {
         public ProjectCodeXContext()
         {
@@ -202,7 +202,7 @@ namespace ProjectCodeX.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.Id).HasColumnName("UserID");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(20)
@@ -232,18 +232,14 @@ namespace ProjectCodeX.Models
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Phone)
+                entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.State)
                     .HasMaxLength(2)
                     .IsUnicode(false)
-                    .HasColumnName("STATE");
-
-                entity.Property(e => e.UserGuid)
-                    .IsUnicode(false)
-                    .HasColumnName("UserGUID");
+                    .HasColumnName("State");
             });
 
             OnModelCreatingPartial(modelBuilder);

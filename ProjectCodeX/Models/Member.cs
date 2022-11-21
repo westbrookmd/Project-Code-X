@@ -5,7 +5,7 @@ namespace ProjectCodeX.Models
 {
     public partial class Member
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public decimal? Due { get; set; }
         public decimal? Balance { get; set; }
 

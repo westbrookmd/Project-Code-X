@@ -1,4 +1,5 @@
 ﻿@{
+    List<User> users = Model.Users;
 }
 
 <input type="text" placeholder="Search for user by ID, name, or email: " />
@@ -18,5 +19,17 @@
             <th></th>
             <th></th>
         </tr>
-    </thead>
+        </thead>
+        <tbody>
+        @foreach (var u in users)
+        {
+            <tr>
+                <td>@u.Id</td>
+                <td>@u.Lname</td>
+                <td>@u.Fname</td>
+                <td>@u.Email</td>
+            </tr>
+        }
+        </tbody>
+        
 </table>

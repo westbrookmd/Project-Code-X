@@ -19,7 +19,7 @@ namespace ProjectCodeX
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>
+            builder.Services.AddIdentity<User, IdentityRole>
                 (options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
@@ -79,7 +79,7 @@ namespace ProjectCodeX
         {
             using (var scope = app.Services.CreateScope())
             {
-                UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                UserManager<User> userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var adminRole = roleManager.FindByNameAsync("Admin").Result;
                 if (adminRole == null)
@@ -91,14 +91,14 @@ namespace ProjectCodeX
                 {
                     try
                     {
-                        var adminUser = new IdentityUser()
+                        var adminUser = new User()
                         {
                             UserName = builder.Configuration.GetSection("DevelopmentUsers").GetValue<string>("AdminEmailAddress"),
                             Email = builder.Configuration.GetSection("DevelopmentUsers").GetValue<string>("AdminEmailAddress"),
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                         };
-                        var userInDB = userManager.FindByEmailAsync(adminUser.Email).Result;
+                        var userInDB = userManager.FindByNameAsync(adminUser.Email).Result;
 
                         if (userInDB == null)
                         {
@@ -107,7 +107,7 @@ namespace ProjectCodeX
                             var user = userManager.CreateAsync(adminUser, password).Result;
                             if (user.Succeeded)
                             {
-                                userManager.AddToRoleAsync(adminUser, "Admin");
+                                var result = userManager.AddToRoleAsync(adminUser, "Admin").Result;
                             }
                             else
                             {

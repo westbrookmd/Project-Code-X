@@ -19,16 +19,14 @@ namespace ProjectCodeX.Controllers
             _dbContext = dbContext;
             _viewModel = viewModel;
         }
-        // GET: UserController
         public IActionResult Index()
         {
             _viewModel.Users = null;
             var currentUserGUID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _viewModel.UserDetail = _dbContext.Users.Where(e => e.UserGuid == currentUserGUID).FirstOrDefault();
+            _viewModel.UserDetail = _dbContext.Users.Where(e => e.Id == currentUserGUID).FirstOrDefault();
             return View(_viewModel);
         }
 
-        // GET: UserController/Details/5
         public IActionResult Details(int id)
         {
             var userDetail = _dbContext.Users.Find(id);
@@ -39,37 +37,6 @@ namespace ProjectCodeX.Controllers
             return View(_viewModel);
         }
 
-        // GET: UserController/Create
-        public IActionResult Create()
-        {
-            return View(_viewModel);
-        }
-
-        // POST: UserController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(User user)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var userDBObject = _dbContext.Users.Add(user);
-                    return Details(userDBObject.Entity.UserId);
-                }
-                else
-                {
-                    return View(_viewModel);
-                }
-
-            }
-            catch
-            {
-                return View(_viewModel);
-            }
-        }
-
-        // GET: UserController/Edit/5
         public IActionResult Edit(int id)
         {
             var userDetail = _dbContext.Users.Find(id);
@@ -84,7 +51,6 @@ namespace ProjectCodeX.Controllers
             }
         }
 
-        // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, User user)
@@ -96,43 +62,6 @@ namespace ProjectCodeX.Controllers
                     _dbContext.Users.Update(user);
                 }
                 return Details(id);
-            }
-            catch
-            {
-                return View(_viewModel);
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public IActionResult Delete(string id)
-        {
-            var user = _dbContext.Users.Find(id);
-            if (user is not null)
-            {
-                _viewModel.UserDetail = user;
-                return View(_viewModel);
-            }
-            _viewModel.UserDetail = new();
-            return View(_viewModel);
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, User user)
-        {
-            try
-            {
-                var userDbObject = _dbContext.Users.Find(id);
-                if (userDbObject is not null)
-                {
-                    _dbContext.Users.Remove(userDbObject);
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    return View(_viewModel);
-                }
             }
             catch
             {

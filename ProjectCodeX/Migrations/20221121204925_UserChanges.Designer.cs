@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCodeX.Models;
 
@@ -11,9 +12,10 @@ using ProjectCodeX.Models;
 namespace ProjectCodeX.Migrations
 {
     [DbContext(typeof(ProjectCodeXContext))]
-    partial class ProjectCodeXContextModelSnapshot : ModelSnapshot
+    [Migration("20221121204925_UserChanges")]
+    partial class UserChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,8 +410,7 @@ namespace ProjectCodeX.Migrations
             modelBuilder.Entity("ProjectCodeX.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("UserID");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -473,10 +474,13 @@ namespace ProjectCodeX.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Phone")
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -488,10 +492,14 @@ namespace ProjectCodeX.Migrations
                         .HasMaxLength(2)
                         .IsUnicode(false)
                         .HasColumnType("varchar(2)")
-                        .HasColumnName("State");
+                        .HasColumnName("STATE");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UserID");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
