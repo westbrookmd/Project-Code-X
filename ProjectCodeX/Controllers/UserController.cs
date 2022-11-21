@@ -10,10 +10,10 @@ namespace ProjectCodeX.Controllers
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ProjectCodeXContext _dbContext;
         private readonly UserViewModel _viewModel;
 
-        public UserController(ILogger<UserController> logger, ApplicationDbContext dbContext, UserViewModel viewModel)
+        public UserController(ILogger<UserController> logger, ProjectCodeXContext dbContext, UserViewModel viewModel)
         {
             _logger = logger;
             _dbContext = dbContext;
@@ -24,14 +24,14 @@ namespace ProjectCodeX.Controllers
         {
             _viewModel.Users = null;
             var currentUserGUID = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _viewModel.UserDetail = _dbContext.User.Where(e => e.UserGUID == currentUserGUID).FirstOrDefault();
+            _viewModel.UserDetail = _dbContext.Users.Where(e => e.UserGuid == currentUserGUID).FirstOrDefault();
             return View(_viewModel);
         }
 
         // GET: UserController/Details/5
         public IActionResult Details(int id)
         {
-            var userDetail = _dbContext.User.Find(id);
+            var userDetail = _dbContext.Users.Find(id);
             if (userDetail is not null)
             {
                 _viewModel.UserDetail = userDetail;
@@ -54,8 +54,8 @@ namespace ProjectCodeX.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userDBObject = _dbContext.User.Add(user);
-                    return Details(userDBObject.Entity.UserID);
+                    var userDBObject = _dbContext.Users.Add(user);
+                    return Details(userDBObject.Entity.UserId);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace ProjectCodeX.Controllers
         // GET: UserController/Edit/5
         public IActionResult Edit(int id)
         {
-            var userDetail = _dbContext.User.Find(id);
+            var userDetail = _dbContext.Users.Find(id);
             if (userDetail is not null)
             {
                 _viewModel.UserDetail = userDetail;
@@ -93,7 +93,7 @@ namespace ProjectCodeX.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _dbContext.User.Update(user);
+                    _dbContext.Users.Update(user);
                 }
                 return Details(id);
             }
@@ -106,7 +106,7 @@ namespace ProjectCodeX.Controllers
         // GET: UserController/Delete/5
         public IActionResult Delete(string id)
         {
-            var user = _dbContext.User.Find(id);
+            var user = _dbContext.Users.Find(id);
             if (user is not null)
             {
                 _viewModel.UserDetail = user;
@@ -123,10 +123,10 @@ namespace ProjectCodeX.Controllers
         {
             try
             {
-                var userDbObject = _dbContext.User.Find(id);
+                var userDbObject = _dbContext.Users.Find(id);
                 if (userDbObject is not null)
                 {
-                    _dbContext.User.Remove(userDbObject);
+                    _dbContext.Users.Remove(userDbObject);
                     return RedirectToAction(nameof(Index));
                 }
                 else

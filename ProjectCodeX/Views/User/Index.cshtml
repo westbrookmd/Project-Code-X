@@ -12,7 +12,14 @@
     if (Model.UserDetail is not null)
     {
         currentUser = @Model.UserDetail;
-        userDisplayValue = currentUser.FName;
+        if (string.IsNullOrEmpty(currentUser.Fname) is not true)
+        {
+            userDisplayValue = currentUser.Fname;
+        }
+        else
+        {
+            userDisplayValue = "";
+        }
     }
     else
     {
@@ -27,11 +34,11 @@
         <label for="uName">User Name:</label><br />
         <input type="text" id="UserName" name="uName" value="" readonly /><br />
         <label for="uID">User ID:</label><br />
-        <input type="text" id="UserID" name="uID" value="@currentUser.UserID" readonly /><br />
+        <input type="text" id="UserID" name="uID" value="@currentUser.UserId" readonly /><br />
         <label for="fName">First Name:</label><br />
-        <input type="text" id="fName" name="fName" value="@currentUser.FName" /><br />
+        <input type="text" id="fName" name="fName" value="@currentUser.Fname" /><br />
         <label for="lName">Last Name:</label><br />
-        <input type="text" id="lName" name="lName" value="@currentUser.LName" /><br />
+        <input type="text" id="lName" name="lName" value="@currentUser.Lname" /><br />
         <label for="address">Address:</label><br />
         <input type="text" id="address" name="address" value="@currentUser.Address" /><br />
         <label for="city">City:</label><br />

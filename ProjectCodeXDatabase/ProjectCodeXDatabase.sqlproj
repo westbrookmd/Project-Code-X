@@ -61,16 +61,16 @@
     <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\news_t.sql" />
+    <Build Include="Tables\News.sql" />
     <Build Include="Stored Procedures\spEvent_Get.sql" />
-    <Build Include="Tables\members_t.sql" />
+    <Build Include="Tables\Members.sql" />
     <Build Include="Tables\Contacts.sql" />
     <Build Include="Tables\Donations.sql" />
     <Build Include="Tables\Purchase.sql" />
     <Build Include="Tables\PurchLineItems.sql" />
     <Build Include="Tables\Users.sql" />
     <Build Include="Stored Procedures\spEvent_Insert.sql" />
-    <Build Include="Tables\events_t.sql" />
+    <Build Include="Tables\Events.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Stored Procedures\spEvent_GetAll.sql" />

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[emailevents_t] (
+﻿CREATE TABLE [dbo].[Events] (
     [EventID]      INT           NOT NULL,
     [Name]         VARCHAR (50)  NULL,
     [Date]         DATE          NULL,

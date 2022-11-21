@@ -2,7 +2,7 @@
 {
     public class NewsViewModel
     {
-        public List<NewsPost>? Posts { get; set; }
-        public NewsPost? PostDetail { get; set; }
+        public List<News>? News { get; set; }
+        public News? NewsDetail { get; set; }
     }
 }

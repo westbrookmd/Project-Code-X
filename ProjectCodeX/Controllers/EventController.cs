@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProjectCodeX.Managers;
+using ProjectCodeX.Data;
 using ProjectCodeX.Models;
 using System.Diagnostics;
 using System.Net;
@@ -13,13 +13,13 @@ namespace ProjectCodeX.Controllers
     public class EventController : Controller
     {
         private readonly ILogger _logger;
-        private readonly EventMgr _mgr;
+        private readonly ProjectCodeXContext _dbContext;
         private readonly EventViewModel _viewModel;
 
-        public EventController(ILogger<EventController> logger, EventMgr mgr, EventViewModel viewModel)
+        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel)
         {
             _logger = logger;
-            _mgr = mgr;
+            _dbContext = dbContext;
             _viewModel = viewModel;
         }
         // GET: Event
@@ -32,12 +32,12 @@ namespace ProjectCodeX.Controllers
                 //Some random values but most of the values are the same
                 events.Add(new Event()
                 {
-                    EventID = i,
+                    EventId = i,
+                    EventName = "",
                     Date = DateTime.Now,
-                    Time = DateTime.Now,
                     Location = "City, State",
-                    Type = "EventType",
-                    NumberOfAttendees = i * 10,
+                    EventType = "EventType",
+                    Attendees = i * 10,
                     AmountRaised = i * 4,
                     Cost = i * 10,
                     Notes = "Example Notes"
@@ -49,96 +49,14 @@ namespace ProjectCodeX.Controllers
         }
 
         // GET: Event/Get/5
-        public IActionResult Get(int id)
+        public IActionResult Details(int id)
         {
-            
-            Event eventFromDb = _mgr.GetEvent(id);
-            if (eventFromDb is not null)
+            var eventDetail = _dbContext.Events.Find(id);
+            if (eventDetail is not null)
             {
-                _viewModel.Events = new()
-                {
-                    eventFromDb!
-                };
-                return View(_viewModel);
+                _viewModel.EventDetail = eventDetail;
             }
-            else
-            {
-                ModelState.AddModelError("Events", "Unable to retrieve event. Please try again.");
-                _viewModel.Events = new();
-                return View(_viewModel);
-            }
-            
-        }
-
-        // GET: Event/Create
-        public ActionResult Create()
-        {
-            
-            
             return View(_viewModel);
-        }
-
-        // POST: Event/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Event eventData)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var result = _mgr.InsertEventAsync(eventData).Result;
-                    return RedirectToAction("Index");
-                }
-                return View(_viewModel);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex.StackTrace);
-                return View(_viewModel);
-            }
-        }
-
-        // GET: Event/Update/5
-        public ActionResult Update(int id)
-        {
-            return View();
-        }
-
-        // POST: Event/Update/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Update(int id, IFormCollection collection)
-        {
-            try
-            {
-                return View(_viewModel);
-            }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-
-        // GET: EventController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EventController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[news_t]
+CREATE TABLE [dbo].[News]
 (
 	[ArticleID] 	INT           IDENTITY (1, 1) NOT NULL,
 	[PublishDate] 	DATE NULL,

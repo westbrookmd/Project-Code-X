@@ -3,7 +3,6 @@ using DataAccess.DbAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectCodeX.Data;
-using ProjectCodeX.Managers;
 using ProjectCodeX.Models;
 
 namespace ProjectCodeX
@@ -16,7 +15,7 @@ namespace ProjectCodeX
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection") ?? throw new InvalidOperationException("Connection string 'DatabaseConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<ProjectCodeXContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -28,13 +27,18 @@ namespace ProjectCodeX
                 })
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<ProjectCodeXContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddAuthentication(options => { });
+            builder.Services.AddAuthorization(options => 
+            { 
+                //options.AddPolicy("Admin", policy => policy.RequireRole("Admin")); 
+            });
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             builder.Services.AddTransient<IEventData, EventData>();
-            builder.Services.AddTransient<EventMgr>();
             builder.Services.AddTransient<EventViewModel>();
             builder.Services.AddTransient<NewsViewModel>();
             builder.Services.AddTransient<UserViewModel>();
@@ -81,7 +85,7 @@ namespace ProjectCodeX
                 if (adminRole == null)
                 {
                     adminRole = new IdentityRole("Admin");
-                    roleManager.CreateAsync(adminRole);
+                    var role = roleManager.CreateAsync(adminRole).Result;
                 }
                 if (app.Environment.IsDevelopment())
                 {
@@ -112,10 +116,10 @@ namespace ProjectCodeX
                         }
                         else
                         {
-                            var roles = userManager.GetRolesAsync(userInDB);
+                            var roles = userManager.GetRolesAsync(userInDB).Result;
                             if (!userManager.IsInRoleAsync(userInDB, "Admin").Result)
                             {
-                                userManager.AddToRoleAsync(userInDB, adminRole.Name);
+                                var example = userManager.AddToRoleAsync(userInDB, adminRole.Name).Result;
                             }
                         }
                     }
@@ -132,7 +136,7 @@ namespace ProjectCodeX
                     var roles = userManager.GetRolesAsync(professorUser).Result;
                     if (!userManager.IsInRoleAsync(professorUser, "Admin").Result)
                     {
-                        userManager.AddToRoleAsync(professorUser, "Admin");
+                        var result = userManager.AddToRoleAsync(professorUser, "Admin").Result;
                     }
                 }
             }

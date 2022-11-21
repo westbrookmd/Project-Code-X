@@ -1,7 +1,7 @@
 ﻿<link rel="stylesheet" href="~/css/news.css" />
-@for (var i = 0; i < Model.Posts.Count; i++)
+@for (var i = 0; i < Model.News.Count; i++)
 {
-    NewsPost e = Model.Posts[i];
+    NewsPost e = Model.News[i];
     <h1 id="title">Article ID: @e.ArticleID</h1>
     <p>Type: @e.Type</p>
 

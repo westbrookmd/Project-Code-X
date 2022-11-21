@@ -1,32 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ProjectCodeX.Models
 {
-    public class Event : IValidatableObject
+    public partial class Event
     {
-        public int EventID { get; set; }
-        [Required]
-        public string Name { get; set; } = "";
-        public DateTime Date { get; set; } //Consolidated into one value for model
-        public DateTime Time { get; set; }
-        [Required, MinLength(3)]
-        public string Location { get; set; } = ""; //Location type
-        [Required, MinLength(3)]
-        public string Type { get; set; } = ""; //Enum?
-        [Required]
-        public int NumberOfAttendees { get; set; }
-        [Required]
-        public double AmountRaised { get; set; }
-        [Required]
-        public double Cost { get; set; }
-        [Required, MinLength(3)]
-        public string Notes { get; set; } = "";
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-
-            return result;
-        }
+        public int EventId { get; set; }
+        public string? Name { get; set; }
+        public DateTime? Date { get; set; }
+        public TimeSpan? Time { get; set; }
+        public string? Location { get; set; }
+        public string? EventType { get; set; }
+        public int? Attendees { get; set; }
+        public decimal? AmountRaised { get; set; }
+        public decimal? Cost { get; set; }
+        public string? Notes { get; set; }
+        public string EventName { get; set; } = null!;
     }
 }
