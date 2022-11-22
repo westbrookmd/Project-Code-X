@@ -1,36 +1,28 @@
 ﻿<link rel="stylesheet" href="~/css/news.css" />
-@for (var i = 0; i < Model.News.Count; i++)
-{
-    NewsPost e = Model.News[i];
-    <h1 id="title">Article ID: @e.ArticleID</h1>
-    <p>Type: @e.Type</p>
-
-    <p>Sed in risus non turpis euismod consectetur. Morbi iaculis vestibulum laoreet. Integer et consectetur neque, at lobortis dolor. Donec nec rhoncus lorem. Donec tortor dui, ornare facilisis orci vel, finibus pellentesque erat. Aliquam turpis risus, accumsan in lacus id, aliquam faucibus mauris. Praesent aliquam vehicula turpis, vitae volutpat ipsum. Duis dignissim, mauris et interdum lobortis, augue metus eleifend dui, ut rhoncus orci dolor molestie libero. Aenean egestas justo quam, sed mattis nibh vulputate nec.</p>
-
-    <p>Nunc ut odio sed nisi lobortis tempor ut in urna. Nam aliquet nisi eu tempor congue. Curabitur nec velit in eros porta bibendum nec sed nibh. Quisque mollis vel magna sed vehicula. Donec ornare odio felis, nec varius eros consequat ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In elit tellus, aliquet ac risus ac, egestas dignissim augue. Vestibulum luctus ante vitae nibh elementum, ut congue quam mattis. Nam vitae libero accumsan, convallis ante non, tempus dui. In non mi varius, dignissim metus vel, hendrerit nisi. Suspendisse ac erat dolor. Vestibulum in dolor nulla. Vivamus dapibus tempus turpis, sed maximus turpis interdum eu. Aliquam erat volutpat. Suspendisse eget est et augue volutpat cursus vitae eu augue.</p>
-
+@{
+    List<News> news = Model.News;
 }
-
 <section class="recentNews">
     <div class="container">
         <h2 class="news-title">Recent News</h2>
         <div class="row">
-            @for (int i = 0; i < 6; i++){
-            <div class=" = ct-blog col-sm-6 col-md-4">
-                <div class="inner">
-                    <div class="fauxcrop">
-						<a asp-area="" asp-controller="News" asp-action="Article"><img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
-                    </div>
-                    <div class="ct-blog-content">
-                        <div class="ct-blog-date">
-                            <span>October</span><strong>12</strong>
+            @for (int i = 0; i < news.Count; i++)
+            {
+                <div class=" = ct-blog col-sm-6 col-md-4">
+                    <div class="inner">
+                        <div class="fauxcrop">
+                                <a asp-controller="News" asp-action="Article" asp-route-id="@news[i].ArticleId"><img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
                         </div>
-                        <h3 class="ct-blog-header">
-                            Article Headline Here
-                        </h3>
+                        <div class="ct-blog-content">
+                            <div class="ct-blog-date">
+                                <span>October</span><strong>12</strong>
+                            </div>
+                            <h3 class="ct-blog-header">
+                                @news[i].Headline
+                            </h3>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
         <div class="btn-news btn-contests">

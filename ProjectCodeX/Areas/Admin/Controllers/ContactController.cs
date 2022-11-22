@@ -1,88 +1,128 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectCodeX.Models;
 using System.Data;
 
 namespace ProjectCodeX.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-
+    [Route("[area]/[controller]/{action=Index}/{id?}")]
     public class ContactController : Controller
     {
-        [Route("[area]/[controller]/{id?}")]
+        private readonly ILogger<ContactController> _logger;
+        private readonly ProjectCodeXContext _dbContext;
+        private readonly ContactViewModel _viewModel;
+
+        public ContactController(ILogger<ContactController> logger, ProjectCodeXContext dbContext, ContactViewModel viewModel)
+        {
+            _logger = logger;
+            _dbContext = dbContext;
+            _viewModel = viewModel;
+        }
 
         public IActionResult Index()
         {
-            return View();
+            ViewBag.Status = "Admin";
+            _viewModel.Contacts = _dbContext.Contacts.ToList();
+            return View(_viewModel);
         }
 
-        // GET: ContactController/Details/5
-        public IActionResult Details(int id)
-        {
-
-            return View();
-        }
-
-        // GET: ContactController/Create
-        public IActionResult Add()
-        {
-            return Edit(0);
-        }
-
-        // POST: ContactController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Add(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ContactController/Edit/5
         public IActionResult Edit(int id)
         {
-            return View();
+            var contactDetail = _dbContext.Contacts.Find(id);
+            if (contactDetail is not null)
+            {
+                _viewModel.ContactDetail = contactDetail;
+                return View(_viewModel);
+            }
+            else
+            {
+                _viewModel.ContactDetail = new();
+                return View(_viewModel);
+            }
         }
 
-        // POST: ContactController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, Contact contact)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    Contact contactDbObject = _dbContext.Contacts.FirstOrDefault(con => con.ContactId == contact.ContactId);
+                    if (contactDbObject is not null)
+                    {
+                        contactDbObject.Fname = contact.Fname;
+                        contactDbObject.Lname = contact.Lname;
+                        contactDbObject.Company = contact.Company;
+                        contactDbObject.Address = contact.Address;
+                        contactDbObject.City = contact.City;
+                        contactDbObject.State = contact.State;
+                        contactDbObject.Phone = contact.Phone;
+                        contactDbObject.Email = contact.Email;
+
+                        _dbContext.Contacts.Update(contactDbObject);
+                        _dbContext.SaveChanges();
+                        return Edit(id);
+                    }
+                    else
+                    {
+                        //news object isn't in the database, create a new object
+                        var result = _dbContext.Contacts.Add(contact);
+                        _dbContext.SaveChanges();
+                        return Edit(result.Entity.ContactId);
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: ContactController/Delete/5
         public IActionResult Delete(int id)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var contactDbObject = _dbContext.Contacts.Find(id);
+                if (contactDbObject is not null)
+                {
+                    _viewModel.ContactDetail = contactDbObject;
+                    return View(_viewModel);
+                }
+            }
+            _viewModel.ContactDetail = null;
+            return View(_viewModel);
         }
 
-        // POST: ContactController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, bool confirmedDeletion)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var contactDbObject = _dbContext.Contacts.Find(id);
+                    if (contactDbObject is not null && confirmedDeletion)
+                    {
+                        _dbContext.Contacts.Remove(contactDbObject);
+                        _dbContext.SaveChanges();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        return View(_viewModel);
+                    }
+                }
+                return View(_viewModel);
             }
             catch
             {
-                return View();
+                return View(_viewModel);
             }
         }
     }

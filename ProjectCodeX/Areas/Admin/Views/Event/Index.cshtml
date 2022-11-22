@@ -1,3 +1,10 @@
+@{
+    List<Event> events = new();
+    if (Model.Events is not null)
+    {
+        events = Model.Events;
+    }
+}
 <link rel="stylesheet" href="~/css/events.css" />
 
 <div class="wrapper">
@@ -33,7 +40,31 @@
 </div>
 <script src="~/js/calendar.js"></script>
 
-<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Add" class="text-light">Add New Event</a></button>
-<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="text-light">Update Existing Event</a></button>
+<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="text-light">Add or Update an Event</a></button>
 <button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Delete" class="text-light">Delete Event</a></button>
+<br />
+<br />
+<div>
+    <form asp-controller="Event" asp-action="Edit" method="get">
+        <p>
+        Event ID: <input type="text" name="id" />
+        <input type="submit" value="Search" />
+        </p>
+    </form> 
+</div>
+
+<div class="upcomingEvents">
+    @foreach (Event e in events)
+    {
+            <h1 id="title">Event Title: @e.EventId</h1>
+            <p>Event Date: @e.Date</p>
+            <p>Details: <b>Location:</b> @e.Location <b>Type:</b> @e.EventType <b>Number of Attendees:</b> @e.Attendees <b>Amount Raised:</b> @e.AmountRaised  <b>Cost:</b> @e.Cost <b>Notes:</b> @e.Notes</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet elit fermentum lectus pharetra posuere. Aliquam at dui lorem. Nunc imperdiet pharetra odio, a condimentum nulla dapibus non. Pellentesque posuere orci ac lectus iaculis pulvinar. Fusce lacinia pretium efficitur. Phasellus vehicula metus vitae suscipit pellentesque. Vestibulum vestibulum vulputate est, et auctor justo congue ut. Morbi ultricies at mi vitae pellentesque. Nam non massa eget leo varius convallis. Curabitur egestas, augue in tristique aliquet, nulla felis finibus elit, aliquam mattis quam justo at felis. Sed dignissim consequat mauris vitae interdum. Sed quis tincidunt lorem. Maecenas tristique condimentum ante, non porttitor turpis volutpat mattis. Nunc eleifend justo et nunc tincidunt suscipit. Pellentesque egestas, sapien sit amet pulvinar congue, quam est rhoncus lorem, et pretium lacus neque ut diam. Pellentesque placerat, est a varius viverra, dui elit viverra lectus, non luctus velit sem nec enim.</p>
+
+            <p>Sed in risus non turpis euismod consectetur. Morbi iaculis vestibulum laoreet. Integer et consectetur neque, at lobortis dolor. Donec nec rhoncus lorem. Donec tortor dui, ornare facilisis orci vel, finibus pellentesque erat. Aliquam turpis risus, accumsan in lacus id, aliquam faucibus mauris. Praesent aliquam vehicula turpis, vitae volutpat ipsum. Duis dignissim, mauris et interdum lobortis, augue metus eleifend dui, ut rhoncus orci dolor molestie libero. Aenean egestas justo quam, sed mattis nibh vulputate nec.</p>
+
+            <p>Nunc ut odio sed nisi lobortis tempor ut in urna. Nam aliquet nisi eu tempor congue. Curabitur nec velit in eros porta bibendum nec sed nibh. Quisque mollis vel magna sed vehicula. Donec ornare odio felis, nec varius eros consequat ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In elit tellus, aliquet ac risus ac, egestas dignissim augue. Vestibulum luctus ante vitae nibh elementum, ut congue quam mattis. Nam vitae libero accumsan, convallis ante non, tempus dui. In non mi varius, dignissim metus vel, hendrerit nisi. Suspendisse ac erat dolor. Vestibulum in dolor nulla. Vivamus dapibus tempus turpis, sed maximus turpis interdum eu. Aliquam erat volutpat. Suspendisse eget est et augue volutpat cursus vitae eu augue.</p>
+
+    }
+    </div>
 

@@ -104,10 +104,6 @@ namespace ProjectCodeX.Models
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.Property(e => e.EventName)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.EventType)
                     .HasMaxLength(50)
                     .IsUnicode(false);

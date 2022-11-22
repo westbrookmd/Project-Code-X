@@ -9,6 +9,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
+[Route("[area]/[controller]/{action=Index}/{id?}")]
 public class NewsController : Controller
 {
     private readonly ILogger<NewsController> _logger;
@@ -21,7 +22,7 @@ public class NewsController : Controller
         _dbContext = dbContext;
         _viewModel = viewModel;
     }
-    [Route("[area]/[controller]/{id?}")]
+    
 
     public IActionResult Index()
     {
@@ -29,52 +30,56 @@ public class NewsController : Controller
         return View(_viewModel);
     }
 
-    // GET: News/Details/5
-    public ActionResult Details(int id)
-    {
-        var postDetail = _dbContext.News.Find(id);
-        if (postDetail is not null)
-        {
-            _viewModel.NewsDetail = postDetail;
-        }
-        return View(_viewModel);
-    }
-
-    // GET: News/Edit/5
     public IActionResult Edit(int id)
     {
         var postDetail = _dbContext.News.Find(id);
         if (postDetail is not null)
         {
             _viewModel.NewsDetail = postDetail;
-            return Details(id);
+            return View(_viewModel);
         }
         else
         {
+            _viewModel.NewsDetail = new();
             return View(_viewModel);
         }
     }
 
-    // POST: News/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, News newsPost)
+    public IActionResult Edit(int id, News news)
     {
         try
         {
             if (ModelState.IsValid)
             {
-                _dbContext.News.Update(newsPost);
+                News newsDBObject = _dbContext.News.FirstOrDefault(e => e.ArticleId == news.ArticleId);
+                if (newsDBObject is not null)
+                {
+                    newsDBObject.Summary = news.Summary;
+                    newsDBObject.ViewCount = news.ViewCount;
+                    newsDBObject.Author = news.Author;
+
+                    _dbContext.News.Update(newsDBObject);
+                    _dbContext.SaveChanges();
+                    return Edit(id);
+                }
+                else
+                {
+                    //news object isn't in the database, create a new object
+                    var result = _dbContext.News.Add(news);
+                    _dbContext.SaveChanges();
+                    return Edit(result.Entity.ArticleId);
+                }
             }
-            return Details(id);
+            return RedirectToAction(nameof(Index));
         }
         catch
         {
-            return View(_viewModel);
+            return RedirectToAction(nameof(Index));
         }
     }
 
-    // GET: News/Delete/5
     public IActionResult Delete(int id)
     {
         var post = _dbContext.News.Find(id);
@@ -87,23 +92,27 @@ public class NewsController : Controller
         return View(_viewModel);
     }
 
-    // POST: News/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, IFormCollection collection)
+    public IActionResult Delete(int id, bool confirmedDeletion)
     {
         try
         {
-            var post = _dbContext.News.Find(id);
-            if (post is not null)
+            if (ModelState.IsValid)
             {
-                _dbContext.News.Remove(post);
-                return RedirectToAction(nameof(Index));
+                var post = _dbContext.News.Find(id);
+                if (post is not null && confirmedDeletion)
+                {
+                    _dbContext.News.Remove(post);
+                    _dbContext.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View(_viewModel);
+                } 
             }
-            else
-            {
-                return View(_viewModel);
-            }
+            return View(_viewModel);
         }
         catch
         {

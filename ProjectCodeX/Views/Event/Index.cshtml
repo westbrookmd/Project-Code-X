@@ -1,3 +1,6 @@
+@{
+    List<Event> events = Model.Events;
+}
 <link rel="stylesheet" href="~/css/events.css" />
 
 <div class="wrapper">
@@ -33,16 +36,15 @@
 </div>
 <script src="~/js/calendar.js"></script>
 
-    <form asp-controller="Event" asp-action="Get" method="get">
-        <p>
-        Event ID: <input type="text" name="id" />
-        <input type="submit" value="Search" />
-        </p>
-    </form>
+<form asp-controller="Event" asp-action="Details" method="get">
+    <p>
+    Event ID: <input type="text" name="id" />
+    <input type="submit" value="Search" />
+    </p>
+</form>
 <div class="upcomingEvents">
-    @for (var i = 0; i < Model.Events.Count; i++)
+    @foreach(Event e in events)
     {
-        Event e = Model.Events[i];
         <h1 id="title">Event Title: @e.EventId</h1>
         <p>Event Date: @e.Date</p>
         <p>Details: <b>Location:</b> @e.Location <b>Type:</b> @e.EventType <b>Number of Attendees:</b> @e.Attendees <b>Amount Raised:</b> @e.AmountRaised  <b>Cost:</b> @e.Cost <b>Notes:</b> @e.Notes</p>

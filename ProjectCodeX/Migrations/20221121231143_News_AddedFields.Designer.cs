@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCodeX.Models;
 
@@ -11,9 +12,10 @@ using ProjectCodeX.Models;
 namespace ProjectCodeX.Migrations
 {
     [DbContext(typeof(ProjectCodeXContext))]
-    partial class ProjectCodeXContextModelSnapshot : ModelSnapshot
+    [Migration("20221121231143_News_AddedFields")]
+    partial class News_AddedFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

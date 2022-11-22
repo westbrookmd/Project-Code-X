@@ -1,89 +1,131 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ProjectCodeX.Models;
 
 namespace ProjectCodeX.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
+    [Route("[area]/[controller]/{action=Index}/{id?}")]
     public class EventController : Controller
     {
-        [Route("[area]/[controller]/{id?}")]
+        private readonly ILogger<EventController> _logger;
+        private readonly ProjectCodeXContext _dbContext;
+        private readonly EventViewModel _viewModel;
 
-        // GET: EventController
+        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel)
+        {
+            _logger = logger;
+            _dbContext = dbContext;
+            _viewModel = viewModel;
+        }
+
         public IActionResult Index()
         {
             ViewBag.Status = "Admin";
-            return View();
+            _viewModel.Events = _dbContext.Events.ToList();
+            return View(_viewModel);
         }
 
-        // GET: EventController/Details/5
-        public IActionResult Details(int id)
-        {
-
-            return View();
-        }
-
-        // GET: EventController/Create
-        public IActionResult Add()
-        {
-            return Edit(0);
-        }
-
-        // POST: EventController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Add(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EventController/Edit/5
         public IActionResult Edit(int id)
         {
-            return View();
+            var eventDetail = _dbContext.Events.Find(id);
+            if (eventDetail is not null)
+            {
+                _viewModel.EventDetail = eventDetail;
+                return View(_viewModel);
+            }
+            else
+            {
+                _viewModel.EventDetail = new();
+                return View(_viewModel);
+            }
         }
 
-        // POST: EventController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, Event e)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    Event eventDbObject = _dbContext.Events.FirstOrDefault(n => n.EventId == e.EventId);
+                    if (eventDbObject is not null)
+                    {
+                        eventDbObject.Name = e.Name;
+                        eventDbObject.Date = e.Date;
+                        eventDbObject.Time = e.Time;
+                        eventDbObject.Location = e.Location;
+                        eventDbObject.EventType = e.EventType;
+                        eventDbObject.Attendees = e.Attendees;
+                        eventDbObject.AmountRaised = e.AmountRaised;
+                        eventDbObject.Cost = e.Cost;
+                        eventDbObject.Notes = e.Notes;
+
+                        _dbContext.Events.Update(eventDbObject);
+                        _dbContext.SaveChanges();
+                        return Edit(id);
+                    }
+                    else
+                    {
+                        //news object isn't in the database, create a new object
+                        var result = _dbContext.Events.Add(e);
+                        _dbContext.SaveChanges();
+                        return Edit(result.Entity.EventId);
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: EventController/Delete/5
         public IActionResult Delete(int id)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var eventDbObject = _dbContext.Events.Find(id);
+                if (eventDbObject is not null)
+                {
+                    _viewModel.EventDetail = eventDbObject;
+                    return View(_viewModel);
+                } 
+            }
+            _viewModel.EventDetail = null;
+            return View(_viewModel);
         }
 
-        // POST: EventController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, bool confirmedDeletion)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var eventDbObject = _dbContext.Events.Find(id);
+                    if (eventDbObject is not null && confirmedDeletion)
+                    {
+                        _dbContext.Events.Remove(eventDbObject);
+                        _dbContext.SaveChanges();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        return View(_viewModel);
+                    }
+                }
+                return View(_viewModel);
             }
             catch
             {
-                return View();
+                return View(_viewModel);
             }
         }
     }

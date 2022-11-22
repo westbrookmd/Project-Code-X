@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectCodeX.Data;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace ProjectCodeX.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
@@ -27,45 +29,33 @@ namespace ProjectCodeX.Controllers
             return View(_viewModel);
         }
 
-        public IActionResult Details(int id)
-        {
-            var userDetail = _dbContext.Users.Find(id);
-            if (userDetail is not null)
-            {
-                _viewModel.UserDetail = userDetail;
-            }
-            return View(_viewModel);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var userDetail = _dbContext.Users.Find(id);
-            if (userDetail is not null)
-            {
-                _viewModel.UserDetail = userDetail;
-                return Details(id);
-            }
-            else
-            {
-                return View(_viewModel);
-            }
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, User user)
+        public IActionResult Edit(User user)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _dbContext.Users.Update(user);
+                    string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                    var userDbObject = _dbContext.Users.Find(currentUserId);
+                    if (userDbObject is not null && user.Id == userDbObject.Id)
+                    {
+                        userDbObject.Fname = user.Fname;
+                        userDbObject.Lname = user.Lname;
+                        userDbObject.Address = user.Address;
+                        userDbObject.City = user.City;
+                        userDbObject.State = user.State;
+                        _dbContext.Users.Update(userDbObject);
+                        _dbContext.SaveChanges();
+                    }
                 }
-                return Details(id);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View(_viewModel);
+                return RedirectToAction("Index");
             }
         }
     }

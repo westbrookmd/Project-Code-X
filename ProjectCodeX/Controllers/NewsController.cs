@@ -26,13 +26,17 @@ public class NewsController : Controller
     }
 
     // GET: News/Details/5
-    public ActionResult Details(int id)
+    public ActionResult Article(int id)
     {
         var postDetail = _dbContext.News.Find(id);
         if (postDetail is not null)
         {
             _viewModel.NewsDetail = postDetail;
+            return View(_viewModel);
         }
-        return View(_viewModel);
+        else
+        {
+            return View(_viewModel);
+        }
     }
 }

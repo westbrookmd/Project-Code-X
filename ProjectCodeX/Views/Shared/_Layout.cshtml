@@ -17,12 +17,13 @@
             @{
                 if(ViewBag.Status == "Admin") {
                     <div id="myLinks">
-                        <a asp-area="Admin" asp-controller="Event" asp-action="Index">Events</a>
-                        <a asp-area="Admin" asp-controller="News" asp-action="Index">News</a>
-                        <a asp-area="Admin" asp-controller="Funds" asp-action="Index">Fund Management</a>
-                        <a asp-area="Admin" asp-controller="Group" asp-action="Index">Groups/Committees Management</a>
+                        <a asp-controller="Event" asp-action="Index">Events</a>
+                        <a asp-controller="News" asp-action="Index">News</a>
+                        <a asp-controller="Funds" asp-action="Index">Fund Management</a>
+                        <a asp-controller="Group" asp-action="Index">Groups/Committees Management</a>
+                        <a asp-controller="UserData" asp-action="Index">All Users</a>
                         <a asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
-                        <a asp-area="Admin" asp-controller="User" asp-action="Index">All Users</a>
+                        
                     </div>
                 }
                 else {

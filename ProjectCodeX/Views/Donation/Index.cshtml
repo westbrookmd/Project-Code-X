@@ -1,0 +1,43 @@
+﻿@{
+    Donation donation = new();
+    int donationCount = 0;
+    if (Model.Donations is not null && Model.Donations.Count > 0)
+    {
+        donationCount = Model.Donations.Count;
+    }
+}
+
+@if (donationCount > 0)
+{
+    @foreach (Donation d in Model.Donations)
+    {
+        /*
+        put donation display logic here
+        */
+    }
+}
+<div class="donation-Form">
+    <form id="donationForm" asp-action="Donate" method="post">
+        <br />
+        <label for="Amount">Amount:</label>
+        <input type="number" id="Amount" name="Amount" />
+        <br />
+
+        <label for="Notes">Notes: </label><br />
+        <textarea rows="4" cols="50" id="Notes" name="Notes" form="donationForm" placeholder="Insert notes here" required value=""></textarea>
+        <br />
+        <label>Card Number: </label><br />
+        <input type="password" placeholder="Card number ( DO NOT ENTER)" maxlength="19" size="30"/>
+        <br />
+        <label>Security Code: </label><br />
+        <input type="password" placeholder="Security Code ( DO NOT ENTER)" maxlength="19" size="30"/>
+        <br />
+        <br />
+        <input type="hidden" id="DonationDate" name="DonationDate" value="@DateTime.UtcNow" />
+        <input type="hidden" id="DonationId" name="DonationId" value="@donation.DonationId" />
+        <input type="hidden" id="UserId" name="UserId" value="@donation.UserId" />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+    </form>
+</div>

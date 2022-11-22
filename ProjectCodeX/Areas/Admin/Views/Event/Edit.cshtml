@@ -2,6 +2,13 @@
     TODO: Ensure date and time are sent to database correctly OR Separate date and time into two fields and use data validation to ensure time entry is valid
     TODO: Determine Event Types to be used, add values to form as radio buttons
 -->
+@{
+    Event eventDetail = new();
+    if (Model.EventDetail is not null)
+    {
+        eventDetail = Model.EventDetail;
+    }
+}
 
 <div class="event-Form">
     <form id="eventForm">
@@ -33,6 +40,19 @@
         <input type="hidden" id="attendees" name="attendees" value="0" />
         <input type="hidden" id="amountRaised" name="amountRaised" value="0" />
         <input type="hidden" id="cost" name="cost" value="0" />
-        
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
     </form>
+</div>
+
+<br />
+<div>
+    <form asp-controller="Event" asp-action="Edit" method="get">
+        <p>
+        Event ID: <input type="text" name="id" />
+        <input type="submit" value="Search" />
+        </p>
+    </form> 
+    <a asp-action="Index">Back to List</a>
 </div>

@@ -74,7 +74,6 @@ public class UserData : Controller
                     _dbContext.Users.Update(userDBObject);
                     _dbContext.SaveChanges();
                 }
-
                 return Edit(user.Id);
             }
             return View(_viewModel);
@@ -93,26 +92,27 @@ public class UserData : Controller
             _viewModel.UserDetail = user;
             return View(_viewModel);
         }
-        _viewModel.UserDetail = new();
+
         return View(_viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(string id, User user)
+    public IActionResult Delete(string id, bool confirmedDeletion)
     {
         try
         {
-            var userDbObject = _dbContext.Users.Find(id);
-            if (userDbObject is not null)
+            if (ModelState.IsValid)
             {
-                _dbContext.Users.Remove(userDbObject);
-                return RedirectToAction(nameof(Index));
+                var userDbObject = _dbContext.Users.Find(id);
+                if (userDbObject is not null && confirmedDeletion)
+                {
+                    _dbContext.Users.Remove(userDbObject);
+                    _dbContext.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            else
-            {
-                return View(_viewModel);
-            }
+            return View(_viewModel);
         }
         catch
         {

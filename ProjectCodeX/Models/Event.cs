@@ -15,6 +15,5 @@ namespace ProjectCodeX.Models
         public decimal? AmountRaised { get; set; }
         public decimal? Cost { get; set; }
         public string? Notes { get; set; }
-        public string EventName { get; set; } = null!;
     }
 }

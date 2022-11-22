@@ -6,9 +6,9 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
+    [Route("[area]/[controller]/{action=Index}/{id?}")]
     public class GroupController : Controller
     {
-        [Route("[area]/[controller]/{id?}")]
 
         public IActionResult Index()
         {
