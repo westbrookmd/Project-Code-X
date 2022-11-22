@@ -54,7 +54,7 @@ public class NewsController : Controller
             if (ModelState.IsValid)
             {
                 News newsDBObject = _dbContext.News.FirstOrDefault(e => e.ArticleId == news.ArticleId);
-                if (newsDBObject is not null)
+                if (newsDBObject is not null && news.ArticleId is not 0)
                 {
                     newsDBObject.Summary = news.Summary;
                     newsDBObject.ViewCount = news.ViewCount;
@@ -67,6 +67,7 @@ public class NewsController : Controller
                 else
                 {
                     //news object isn't in the database, create a new object
+                    news.PublishDate = DateTime.Now;
                     var result = _dbContext.News.Add(news);
                     _dbContext.SaveChanges();
                     return Edit(result.Entity.ArticleId);

@@ -27,16 +27,23 @@ namespace ProjectCodeX.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FName = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
+                    LName = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
+                    Address = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
+                    City = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
+                    State = table.Column<string>(type: "varchar(2)", unicode: false, maxLength: 2, nullable: true),
+                    PayMethod = table.Column<string>(type: "varchar(15)", unicode: false, maxLength: 15, nullable: true),
+                    NextBillDate = table.Column<DateTime>(type: "date", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -45,7 +52,7 @@ namespace ProjectCodeX.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.UserID);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,7 +81,7 @@ namespace ProjectCodeX.Migrations
                 {
                     DonationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<decimal>(type: "smallmoney", nullable: true),
                     DonationDate = table.Column<DateTime>(type: "date", nullable: true),
                     Notes = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: true)
@@ -88,7 +95,8 @@ namespace ProjectCodeX.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    EventID = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Date = table.Column<DateTime>(type: "date", nullable: true),
                     Time = table.Column<TimeSpan>(type: "time", nullable: true),
@@ -97,12 +105,11 @@ namespace ProjectCodeX.Migrations
                     Attendees = table.Column<int>(type: "int", nullable: true),
                     AmountRaised = table.Column<decimal>(type: "smallmoney", nullable: true),
                     Cost = table.Column<decimal>(type: "smallmoney", nullable: true),
-                    Notes = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true),
-                    EventName = table.Column<string>(type: "varchar(25)", unicode: false, maxLength: 25, nullable: false)
+                    Notes = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.EventID);
+                    table.PrimaryKey("PK_Events", x => x.EventId);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,10 +118,12 @@ namespace ProjectCodeX.Migrations
                 {
                     ArticleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PublishDate = table.Column<DateTime>(type: "date", nullable: true),
-                    Summary = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
-                    ViewCount = table.Column<int>(type: "int", nullable: true),
-                    Author = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: true)
+                    PublishDate = table.Column<DateTime>(type: "date", nullable: false),
+                    Summary = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: false),
+                    ViewCount = table.Column<int>(type: "int", nullable: false),
+                    Author = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Headline = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,28 +144,6 @@ namespace ProjectCodeX.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__Purchase__25A0C5AE42A58AFD", x => x.PurchID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserGUID = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
-                    FName = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
-                    LName = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
-                    Address = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
-                    City = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: true),
-                    STATE = table.Column<string>(type: "varchar(2)", unicode: false, maxLength: 2, nullable: true),
-                    Phone = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: true),
-                    Email = table.Column<string>(type: "varchar(25)", unicode: false, maxLength: 25, nullable: true),
-                    PayMethod = table.Column<string>(type: "varchar(15)", unicode: false, maxLength: 15, nullable: true),
-                    NextBillDate = table.Column<DateTime>(type: "date", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserID);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,7 +184,7 @@ namespace ProjectCodeX.Migrations
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -217,7 +204,7 @@ namespace ProjectCodeX.Migrations
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -241,7 +228,7 @@ namespace ProjectCodeX.Migrations
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -261,8 +248,25 @@ namespace ProjectCodeX.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Members",
+                columns: table => new
+                {
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Due = table.Column<decimal>(type: "smallmoney", nullable: true),
+                    Balance = table.Column<decimal>(type: "smallmoney", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK__Members__UserID__2704CA5F",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -283,23 +287,6 @@ namespace ProjectCodeX.Migrations
                         column: x => x.PurchID,
                         principalTable: "Purchase",
                         principalColumn: "PurchID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Members",
-                columns: table => new
-                {
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    Due = table.Column<decimal>(type: "smallmoney", nullable: true),
-                    Balance = table.Column<decimal>(type: "smallmoney", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK__Members__UserID__2704CA5F",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateIndex(
@@ -392,9 +379,6 @@ namespace ProjectCodeX.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Purchase");

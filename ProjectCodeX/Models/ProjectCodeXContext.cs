@@ -94,9 +94,7 @@ namespace ProjectCodeX.Models
 
             modelBuilder.Entity<Event>(entity =>
             {
-                entity.Property(e => e.EventId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("EventID");
+                entity.HasKey(e => e.EventId);
 
                 entity.Property(e => e.AmountRaised).HasColumnType("smallmoney");
 

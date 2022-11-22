@@ -236,8 +236,9 @@ namespace ProjectCodeX.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("UserID");
 
                     b.HasKey("DonationId");
@@ -248,8 +249,10 @@ namespace ProjectCodeX.Migrations
             modelBuilder.Entity("ProjectCodeX.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
-                        .HasColumnType("int")
-                        .HasColumnName("EventID");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
 
                     b.Property<decimal?>("AmountRaised")
                         .HasColumnType("smallmoney");
@@ -262,12 +265,6 @@ namespace ProjectCodeX.Migrations
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("date");
-
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(25)");
 
                     b.Property<string>("EventType")
                         .HasMaxLength(50)
@@ -325,25 +322,29 @@ namespace ProjectCodeX.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"), 1L, 1);
 
                     b.Property<string>("Author")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .IsUnicode(false)
                         .HasColumnType("varchar(40)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Headline")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("PublishDate")
+                    b.Property<DateTime>("PublishDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Summary")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .IsUnicode(false)
                         .HasColumnType("varchar(30)");
 
-                    b.Property<int?>("ViewCount")
+                    b.Property<int>("ViewCount")
                         .HasColumnType("int");
 
                     b.HasKey("ArticleId")

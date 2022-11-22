@@ -3,40 +3,35 @@
     TODO: Determine Event Types to be used, add values to form as radio buttons
 -->
 @{
-    Event eventDetail = new();
-    if (Model.EventDetail is not null)
+    Event eventDetail = Model.EventDetail;
+    if (Model.EventDetail is null)
     {
-        eventDetail = Model.EventDetail;
+        eventDetail = new();
     }
 }
 
 <div class="event-Form">
-    <form id="eventForm">
+    <form id="eventForm" asp-action="Edit" method="post">
 
         <div class="form-group">
-        <label for="eventName">Event Name: </label><br />
-        <input type="text" id="eventName" name="eventName" required /><br />
+        <label for="Name">Event Name: </label><br />
+        <input type="text" id="Name" name="Name" required value="@eventDetail.Name"/><br />
         </div>
 
         <div class="form-group">
         <label for="eventDate">Event Date and Time: </label><br />
-        <input type="datetime-local" id="eventDate" name="eventDate" required /><br />
+        <input type="datetime-local" id="Date" name="Date" required value="@eventDetail.Date"/><br />
         </div>
 
         <div class="form-group">
         <label for="location">Location: </label><br />
-        <input type="text" id="location" name="location" value="TBD" /><br />
-        </div>
-
-        <div class="form-group">
-        <input type="radio" id="" name="eventType" value="" />
-        <label for="">Placeholder</label>
+        <input type="text" id="location" name="location" value="@eventDetail.Location" /><br />
         </div>
 
         <label for="notes">Additional Notes: </label><br />
-        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements."></textarea>
+        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements." value="@eventDetail.Notes"></textarea>
 
-        <input type="hidden" id="eventID" name="eventID" value="0" />
+        <input type="hidden" id="eventID" name="eventID" value="@eventDetail.EventId" />
         <input type="hidden" id="attendees" name="attendees" value="0" />
         <input type="hidden" id="amountRaised" name="amountRaised" value="0" />
         <input type="hidden" id="cost" name="cost" value="0" />

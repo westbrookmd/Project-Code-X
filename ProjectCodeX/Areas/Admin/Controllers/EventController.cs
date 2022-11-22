@@ -61,9 +61,6 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                         eventDbObject.Time = e.Time;
                         eventDbObject.Location = e.Location;
                         eventDbObject.EventType = e.EventType;
-                        eventDbObject.Attendees = e.Attendees;
-                        eventDbObject.AmountRaised = e.AmountRaised;
-                        eventDbObject.Cost = e.Cost;
                         eventDbObject.Notes = e.Notes;
 
                         _dbContext.Events.Update(eventDbObject);
