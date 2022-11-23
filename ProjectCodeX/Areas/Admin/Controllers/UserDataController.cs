@@ -14,10 +14,10 @@ namespace ProjectCodeX.Areas.Admin.Controllers;
 [Route("[area]/[controller]/{action=Index}/{id?}")]
 public class UserDataController : Controller
 {
-    private readonly ILogger<UserController> _logger;
+    private readonly ILogger<UserDataController> _logger;
     private readonly ProjectCodeXContext _dbContext;
     private readonly UserViewModel _viewModel;
-    public UserDataController(ILogger<UserController> logger, ProjectCodeXContext dbContext, UserViewModel viewModel)
+    public UserDataController(ILogger<UserDataController> logger, ProjectCodeXContext dbContext, UserViewModel viewModel)
     {
         _logger = logger;
         _dbContext = dbContext;
