@@ -1,4 +1,8 @@
-﻿function generate_year_range(start, end) {
+﻿/* Code to grab model data?
+ * var events = @Html.Raw(JSON.Encode(Model.Events))
+ * */
+
+function generate_year_range(start, end) {
     var years = "";
     for (var year = start; year <= end; year++) {
         years += "<option value='" + year + "'>" + year + "</option>";
