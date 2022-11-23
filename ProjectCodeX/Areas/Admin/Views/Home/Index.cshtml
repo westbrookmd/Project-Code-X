@@ -3,23 +3,24 @@
 }
 
 <!--
-    todo: create homepage that looks attractive
+    TODO: Ensure Admin home provides links to places that user currently has access to.
+    TODO: Pretty this page up
 -->
 
-<div class="text-center">
-    <h1 class="display-4">Howdy</h1>
-    <p>This page is a temporary placeholder for the Project Code_X Senior Project.</p>
-    <table>
-        <tr>
-            <th>UserID</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-    <a asp-area="Admin" asp-controller="UserData" asp-action="Index">Click here to go to admin controls for user database</a>
+<div>
+    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="UserData" asp-action="Index" class="text-white">User Management</a></button>
+    <br />
+    <br />
+    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Index" class="text-white">Event Management</a></button>
+    <br />
+    <br />
+    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="News" asp-action="Index" class="text-white">News Management</a></button>
+    <br />
+    <br />
+    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="Group" asp-action="Index" class="text-white">Group/Committee Management</a></button>
+    <br />
+    <br />
+    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="text-white">Contact Management</a></button>
+    <br />
+    <br />
 </div>
