@@ -4,12 +4,11 @@
 // Write your JavaScript code.
 
 //Display navigation menu when user clicks on it
-function showMenu() {
-    var links = document.getElementById("myLinks");
-    if (links.style.display === "block") {
-        links.style.display = "none";
-    }
-    else {
-        links.style.display = "block";
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
     }
 }

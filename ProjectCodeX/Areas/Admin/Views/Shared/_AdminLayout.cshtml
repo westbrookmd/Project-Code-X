@@ -1,5 +1,51 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<!--
+    TODO: Determine if special admin navbar is needed, or if site-wide navbar is suitable
+    TODO: Add hamburger menu to allow users to view links to different admin pages they can access
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProjectCodeX</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProjectCodeX.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" asp-append-version="true">
+</head>
+<body>
+    <header>
+        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Project_Code-X_Logo.jpg" class="logo" /></a>
+        <div class="topnav">
+                <div id="myLinks">
+                    <a asp-controller="Event" asp-action="Index">Event Management</a>
+                    <a asp-controller="News" asp-action="Index">News Management</a>
+                    <a asp-controller="Funds" asp-action="Index">Fund Management</a>
+                    <a asp-controller="Group" asp-action="Index">Groups/Committees Management</a>
+                    <a asp-controller="UserData" asp-action="Index">User Management</a>
+                    <a asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
+                </div>
+
+            <a href="javascript:void(0);" class="icon" onclick="showMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+            <partial name="_LoginPartial" />
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - ProjectCodeX - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

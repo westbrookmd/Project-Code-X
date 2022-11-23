@@ -9,7 +9,6 @@
     [AmountRaised] SMALLMONEY    NULL,
     [Cost]         SMALLMONEY    NULL,
     [Notes]        VARCHAR (500) NULL,
-    [EventName]    VARCHAR (25)  NOT NULL,
     PRIMARY KEY CLUSTERED ([EventID] ASC)
 );
 

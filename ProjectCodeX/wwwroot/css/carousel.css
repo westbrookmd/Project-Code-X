@@ -1,0 +1,9 @@
+﻿/*
+        TODO: Make sure carousel is centered on page.
+*/
+#myCarousel {
+    width: 50%;
+    height: 50%;
+    padding: 25px;
+    margin: 25px;
+}
