@@ -1,9 +1,11 @@
 using DataAccess.Data;
 using DataAccess.DbAccess;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
+using ProjectCodeX.Services;
 
 namespace ProjectCodeX
 {
@@ -44,6 +46,15 @@ namespace ProjectCodeX
             builder.Services.AddTransient<UserViewModel>();
             builder.Services.AddTransient<DonationViewModel>();
             builder.Services.AddTransient<ContactViewModel>();
+
+            //Email service setup
+            if (!string.IsNullOrEmpty(builder.Configuration.GetValue<string>("SENDGRID_API_KEY")))
+            {
+                builder.Services.AddTransient<IEmailSender, EmailSender>();
+                builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+            }
+            
+
             var app = builder.Build();
 
             CreateAdminUsers(builder, app);
