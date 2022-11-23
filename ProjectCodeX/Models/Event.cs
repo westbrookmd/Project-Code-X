@@ -1,14 +1,19 @@
-﻿namespace ProjectCodeX.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ProjectCodeX.Models
 {
-    public class Event
+    public partial class Event
     {
-        public int EventID { get; set; }
-        public DateTime Date { get; set; } //Consolidated into one value for model
-        public string Location { get; set; } = ""; //Location type
-        public string Type { get; set; } = ""; //Enum?
-        public int NumberOfAttendees { get; set; }
-        public double AmountRaised { get; set; }
-        public double Cost { get; set; }
-        public string Notes { get; set; }
+        public int EventId { get; set; }
+        public string? Name { get; set; }
+        public DateTime? Date { get; set; }
+        public TimeSpan? Time { get; set; }
+        public string? Location { get; set; }
+        public string? EventType { get; set; }
+        public int? Attendees { get; set; }
+        public decimal? AmountRaised { get; set; }
+        public decimal? Cost { get; set; }
+        public string? Notes { get; set; }
     }
 }

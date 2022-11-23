@@ -1,10 +1,11 @@
 using DataAccess.Data;
 using DataAccess.DbAccess;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using ProjectCodeX.Data;
-using ProjectCodeX.Managers;
 using ProjectCodeX.Models;
+using ProjectCodeX.Services;
 
 namespace ProjectCodeX
 {
@@ -16,11 +17,11 @@ namespace ProjectCodeX
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection") ?? throw new InvalidOperationException("Connection string 'DatabaseConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<ProjectCodeXContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>
+            builder.Services.AddIdentity<User, IdentityRole>
                 (options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
@@ -28,14 +29,32 @@ namespace ProjectCodeX
                 })
                 .AddRoles<IdentityRole>()
                 .AddDefaultUI()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<ProjectCodeXContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddAuthentication(options => { });
+            builder.Services.AddAuthorization(options => 
+            { 
+                //options.AddPolicy("Admin", policy => policy.RequireRole("Admin")); 
+            });
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             builder.Services.AddTransient<IEventData, EventData>();
-            builder.Services.AddTransient<EventMgr>();
             builder.Services.AddTransient<EventViewModel>();
+            builder.Services.AddTransient<NewsViewModel>();
+            builder.Services.AddTransient<UserViewModel>();
+            builder.Services.AddTransient<DonationViewModel>();
+            builder.Services.AddTransient<ContactViewModel>();
+
+            //Email service setup
+            if (!string.IsNullOrEmpty(builder.Configuration.GetValue<string>("SENDGRID_API_KEY")))
+            {
+                builder.Services.AddTransient<IEmailSender, EmailSender>();
+                builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
+            }
+            
+
             var app = builder.Build();
 
             CreateAdminUsers(builder, app);
@@ -73,26 +92,26 @@ namespace ProjectCodeX
         {
             using (var scope = app.Services.CreateScope())
             {
-                UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                UserManager<User> userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var adminRole = roleManager.FindByNameAsync("Admin").Result;
                 if (adminRole == null)
                 {
                     adminRole = new IdentityRole("Admin");
-                    roleManager.CreateAsync(adminRole);
+                    var role = roleManager.CreateAsync(adminRole).Result;
                 }
                 if (app.Environment.IsDevelopment())
                 {
                     try
                     {
-                        var adminUser = new IdentityUser()
+                        var adminUser = new User()
                         {
                             UserName = builder.Configuration.GetSection("DevelopmentUsers").GetValue<string>("AdminEmailAddress"),
                             Email = builder.Configuration.GetSection("DevelopmentUsers").GetValue<string>("AdminEmailAddress"),
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                         };
-                        var userInDB = userManager.FindByEmailAsync(adminUser.Email).Result;
+                        var userInDB = userManager.FindByNameAsync(adminUser.Email).Result;
 
                         if (userInDB == null)
                         {
@@ -101,7 +120,7 @@ namespace ProjectCodeX
                             var user = userManager.CreateAsync(adminUser, password).Result;
                             if (user.Succeeded)
                             {
-                                userManager.AddToRoleAsync(adminUser, "Admin");
+                                var result = userManager.AddToRoleAsync(adminUser, "Admin").Result;
                             }
                             else
                             {
@@ -110,10 +129,10 @@ namespace ProjectCodeX
                         }
                         else
                         {
-                            var roles = userManager.GetRolesAsync(userInDB);
+                            var roles = userManager.GetRolesAsync(userInDB).Result;
                             if (!userManager.IsInRoleAsync(userInDB, "Admin").Result)
                             {
-                                userManager.AddToRoleAsync(userInDB, adminRole.Name);
+                                var example = userManager.AddToRoleAsync(userInDB, adminRole.Name).Result;
                             }
                         }
                     }
@@ -130,7 +149,7 @@ namespace ProjectCodeX
                     var roles = userManager.GetRolesAsync(professorUser).Result;
                     if (!userManager.IsInRoleAsync(professorUser, "Admin").Result)
                     {
-                        userManager.AddToRoleAsync(professorUser, "Admin");
+                        var result = userManager.AddToRoleAsync(professorUser, "Admin").Result;
                     }
                 }
             }

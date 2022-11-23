@@ -1,88 +1,61 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjectCodeX.Data;
+using ProjectCodeX.Models;
+using System.Security.Claims;
 
 namespace ProjectCodeX.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
+        private readonly ProjectCodeXContext _dbContext;
+        private readonly UserViewModel _viewModel;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, ProjectCodeXContext dbContext, UserViewModel viewModel)
         {
             _logger = logger;
+            _dbContext = dbContext;
+            _viewModel = viewModel;
         }
-        // GET: UserController
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            return View();
+            _viewModel.Users = null;
+            var currentUserGUID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _viewModel.UserDetail = _dbContext.Users.Where(e => e.Id == currentUserGUID).FirstOrDefault();
+            return View(_viewModel);
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Edit(User user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    string currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                    var userDbObject = _dbContext.Users.Find(currentUserId);
+                    if (userDbObject is not null && user.Id == userDbObject.Id)
+                    {
+                        userDbObject.Fname = user.Fname;
+                        userDbObject.Lname = user.Lname;
+                        userDbObject.Address = user.Address;
+                        userDbObject.City = user.City;
+                        userDbObject.State = user.State;
+                        _dbContext.Users.Update(userDbObject);
+                        _dbContext.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return RedirectToAction("Index");
             }
         }
     }

@@ -1,0 +1,12 @@
+﻿@{
+    User user = Model.UserDetail;
+}
+<h1>Delete User</h1>
+<h2>Are you sure you wish to delete this user? Once done, this action cannot be undone.</h2>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="Id" value="@user.Id"/>
+    <input type="hidden" name="confirmed" value="true"/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()" />
+</form>

@@ -1,37 +1,64 @@
-﻿@model ProjectCodeX.Models.EventViewModel
-
 @{
-    ViewData["Title"] = "Get";
+    List<Event> events = new();
+    if (Model.Events is not null)
+    {
+        events = Model.Events;
+    }
 }
+<link rel="stylesheet" href="~/css/events.css" />
 
-<h1>Get</h1>
-
-<div>
-    <h4>EventViewModel</h4>
-    @Html.ValidationMessageFor(evm => evm.Events)
-    <hr />
-    <dl class="row">
-    </dl>
+<div class="wrapper">
+    <div class="container-calendar">
+        <h3 id="monthAndYear"></h3>
+        <div class="button-container-calendar">
+            <button id="previous" onclick="previous()">&#8249;</button>
+            <button id="next" onclick="next()">&#8250;</button>
+        </div>
+        <table class="table-calendar" id="calendar" data-lang="en">
+            <thead id="thead-month"></thead>
+            <tbody id="calendar-body"></tbody>
+        </table>
+        <div class="footer-container-calendar">
+            <label for="month">Jump To:</label>
+            <select id="month" onchange="jump()">
+                <option value="0">Jan</option>
+                <option value="1">Feb</option>
+                <option value="2">Mar</option>
+                <option value="3">Apr</option>
+                <option value="4">May</option>
+                <option value="5">Jun</option>
+                <option value="6">Jul</option>
+                <option value="7">Aug</option>
+                <option value="8">Sep</option>
+                <option value="9">Oct</option>
+                <option value="10">Nov</option>
+                <option value="11">Dec</option>
+            </select>
+            <select id="year" onchange="jump()"></select>
+        </div>
+    </div>
 </div>
+<script src="~/js/calendar.js"></script>
 
+<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="text-light">Add or Update an Event</a></button>
+<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Event" asp-action="Delete" class="text-light">Delete Event</a></button>
+<br />
+<br />
 <div>
-    <form asp-controller="Event" asp-action="Get" method="get">
+    <form asp-controller="Event" asp-action="Edit" method="get">
         <p>
-        Event ID: <input type="int" name="id" />
-        <input type="submit" value="Filter" />
+        Event ID: <input type="text" name="id" />
+        <input type="submit" value="Search" />
         </p>
     </form> 
-    
-    <a asp-action="Index">Back to List</a>
 </div>
 
 <div class="upcomingEvents">
-    @for (var i = 0; i < Model.Events.Count(); i++)
+    @foreach (Event e in events)
     {
-        Event e = Model.Events[i];
-            <h1 id="title">Event Title: @e.EventID</h1>
-            <p>Event Date: @e.Date</p>
-            <p>Details: <b>Location:</b> @e.Location <b>Type:</b> @e.Type <b>Number of Attendees:</b> @e.NumberOfAttendees <b>Amount Raised:</b> @e.AmountRaised  <b>Cost:</b> @e.Cost <b>Notes:</b> @e.Notes</p>
+            <h1 id="title">Event Title: @e.EventId</h1>
+            <p>Event Date: @e.Date.Value.ToShortDateString()</p>
+            <p>Details: <b>Location:</b> @e.Location <b>Type:</b> @e.EventType <b>Number of Attendees:</b> @e.Attendees <b>Amount Raised:</b> @e.AmountRaised  <b>Cost:</b> @e.Cost <b>Notes:</b> @e.Notes</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet elit fermentum lectus pharetra posuere. Aliquam at dui lorem. Nunc imperdiet pharetra odio, a condimentum nulla dapibus non. Pellentesque posuere orci ac lectus iaculis pulvinar. Fusce lacinia pretium efficitur. Phasellus vehicula metus vitae suscipit pellentesque. Vestibulum vestibulum vulputate est, et auctor justo congue ut. Morbi ultricies at mi vitae pellentesque. Nam non massa eget leo varius convallis. Curabitur egestas, augue in tristique aliquet, nulla felis finibus elit, aliquam mattis quam justo at felis. Sed dignissim consequat mauris vitae interdum. Sed quis tincidunt lorem. Maecenas tristique condimentum ante, non porttitor turpis volutpat mattis. Nunc eleifend justo et nunc tincidunt suscipit. Pellentesque egestas, sapien sit amet pulvinar congue, quam est rhoncus lorem, et pretium lacus neque ut diam. Pellentesque placerat, est a varius viverra, dui elit viverra lectus, non luctus velit sem nec enim.</p>
 
             <p>Sed in risus non turpis euismod consectetur. Morbi iaculis vestibulum laoreet. Integer et consectetur neque, at lobortis dolor. Donec nec rhoncus lorem. Donec tortor dui, ornare facilisis orci vel, finibus pellentesque erat. Aliquam turpis risus, accumsan in lacus id, aliquam faucibus mauris. Praesent aliquam vehicula turpis, vitae volutpat ipsum. Duis dignissim, mauris et interdum lobortis, augue metus eleifend dui, ut rhoncus orci dolor molestie libero. Aenean egestas justo quam, sed mattis nibh vulputate nec.</p>
@@ -40,4 +67,4 @@
 
     }
     </div>
-</div>
+

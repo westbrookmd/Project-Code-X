@@ -1,0 +1,53 @@
+﻿<!--
+    TODO: Ensure date and time are sent to database correctly OR Separate date and time into two fields and use data validation to ensure time entry is valid
+    TODO: Determine Event Types to be used, add values to form as radio buttons
+-->
+@{
+    Event eventDetail = Model.EventDetail;
+    if (Model.EventDetail is null)
+    {
+        eventDetail = new();
+    }
+}
+
+<div class="event-Form">
+    <form id="eventForm" asp-action="Edit" method="post">
+
+        <div class="form-group">
+        <label for="Name">Event Name: </label><br />
+        <input type="text" id="Name" name="Name" required value="@eventDetail.Name"/><br />
+        </div>
+
+        <div class="form-group">
+        <label for="eventDate">Event Date and Time: </label><br />
+        <input type="datetime-local" id="Date" name="Date" required value="@eventDetail.Date"/><br />
+        </div>
+
+        <div class="form-group">
+        <label for="location">Location: </label><br />
+        <input type="text" id="location" name="location" value="@eventDetail.Location" /><br />
+        </div>
+
+        <label for="notes">Additional Notes: </label><br />
+        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements." value="@eventDetail.Notes"></textarea>
+
+        <input type="hidden" id="eventID" name="eventID" value="@eventDetail.EventId" />
+        <input type="hidden" id="attendees" name="attendees" value="0" />
+        <input type="hidden" id="amountRaised" name="amountRaised" value="0" />
+        <input type="hidden" id="cost" name="cost" value="0" />
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+    </form>
+</div>
+
+<br />
+<div>
+    <form asp-controller="Event" asp-action="Edit" method="get">
+        <p>
+        Event ID: <input type="text" name="id" />
+        <input type="submit" value="Search" />
+        </p>
+    </form> 
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,45 @@
+﻿@model ProjectCodeX.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Event eventDetail = null;
+    if (Model.EventDetail is not null)
+    {
+        eventDetail = Model.EventDetail;
+    }
+}
+
+<div>
+    <h4>EventViewModel</h4>
+    @Html.ValidationMessageFor(evm => evm.Events)
+    <hr />
+    <dl class="row">
+    </dl>
+</div>
+
+
+
+<div class="upcomingEvents">
+    @if(eventDetail is not null)
+    {
+        <h1 id="title">Event Title: @eventDetail.EventId</h1>
+            <p>Event Date:  @eventDetail.Date</p>
+        <p>Details: <b>Location:</b> @eventDetail.Location <b>Type:</b> @eventDetail.EventType <b>Number of Attendees:</b> @eventDetail.Attendees <b>Amount Raised:</b> @eventDetail.AmountRaised  <b>Cost:</b> @eventDetail.Cost <b>Notes:</b> @eventDetail.Notes</p>
+    }
+    else
+    {
+        <h1>Event not found</h1>
+    }
+    
+</div>
+
+<div>
+    <form asp-controller="Event" asp-action="Details" method="get">
+        <p>
+        Event ID: <input type="text" name="id" />
+        <input type="submit" value="Search" />
+        </p>
+    </form> 
+
+    <a asp-action="Index">Back to List</a>
+</div>

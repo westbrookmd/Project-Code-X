@@ -47,4 +47,5 @@ public class EventData : IEventData
 
 	public Task DeleteEvent(int id) =>
 		_db.SaveData("dbo.spEvent_Delete", new { EventID = id });
+
 }

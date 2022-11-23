@@ -1,0 +1,31 @@
+﻿@{
+    Event eventDetail = null;
+    if (Model.EventDetail is not null)
+    {
+        eventDetail = Model.EventDetail;
+    }
+}
+@if(eventDetail is not null)
+{
+    <h1>Delete Event</h1>
+    <h2>Are you sure you wish to delete this event? Once done, this action cannot be undone.</h2>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="EventId" />
+        <input type="hidden" name="confirmeDeletion" value="true" />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()" />
+    </form>
+}
+else
+{
+    <h1>Event not found</h1>
+    <form asp-controller="Event" asp-action="Details" method="get">
+    <p>
+    Event ID: <input type="text" name="id" />
+    <input type="submit" value="Search" />
+    </p>
+    </form>
+    <a asp-action="Index">Back to List</a>
+}

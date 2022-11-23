@@ -1,25 +1,28 @@
 ﻿<link rel="stylesheet" href="~/css/news.css" />
-
+@{
+    List<News> news = Model.News;
+}
 <section class="recentNews">
     <div class="container">
         <h2 class="news-title">Recent News</h2>
         <div class="row">
-            @for (int i = 0; i < 6; i++){
-            <div class=" = ct-blog col-sm-6 col-md-4">
-                <div class="inner">
-                    <div class="fauxcrop">
-						<a asp-area="" asp-controller="News" asp-action="Article"><img alt="News Entry" src="~/images/pngegg.png"                           class="img-fluid card-img" /></a>
-                    </div>
-                    <div class="ct-blog-content">
-                        <div class="ct-blog-date">
-                            <span>October</span><strong>12</strong>
+            @for (int i = 0; i < news.Count; i++)
+            {
+                <div class=" = ct-blog col-sm-6 col-md-4">
+                    <div class="inner">
+                        <div class="fauxcrop">
+                                <a asp-controller="News" asp-action="Article" asp-route-id="@news[i].ArticleId"><img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
                         </div>
-                        <h3 class="ct-blog-header">
-                            Article Headline Here
-                        </h3>
+                        <div class="ct-blog-content">
+                            <div class="ct-blog-date">
+                                <span>October</span><strong>12</strong>
+                            </div>
+                            <h3 class="ct-blog-header">
+                                @news[i].Headline
+                            </h3>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
         <div class="btn-news btn-contests">

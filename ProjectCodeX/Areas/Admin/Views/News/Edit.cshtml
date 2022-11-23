@@ -1,0 +1,39 @@
+﻿@{
+    News news = Model.NewsDetail;
+    if (news is null)
+    {
+        news = new();
+    }
+}
+<!--
+    TODO: Field for publish date should show the date article was published. If adding new article, value should equal today's date
+-->
+
+<div class="news-Form">
+    <form id="newsForm" asp-action="Edit" method="post">
+        
+        <div class="form-group">
+            <label for="headline">Headline: </label><br />
+            <input type="text" id="headline" name="headline" required value="@news.Headline"/>
+        </div>
+
+
+        <label for="content">Article content: </label><br />
+        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required value="@news.Content"></textarea>
+
+        <label for="content">Article summary: </label><br />
+        <textarea rows="4" cols="50" id="summary" name="summary" form="newsForm" placeholder="Insert article summary here" required value="@news.Summary"></textarea>
+
+
+        <div class="form-group">
+            <label for="author">Author: </label><br />
+            <input type="text" id="author" name="Author" required placeholder="Please insert your first and last name. Ex: John Doe" value="@news.Author"/>
+        </div>
+
+        <input type="hidden" id="PublishDate" name="PublishDate" value="@news.PublishDate" />
+        <input type="hidden" id="articleID" name="ArticleId" value="@news.ArticleId" />
+        <input type="hidden" id="viewCount" name="ViewCount" value="@news.ViewCount" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+    </form>
+</div>
