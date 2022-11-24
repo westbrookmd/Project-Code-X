@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> userManager
+@{
+    Group group = new("", "", 0, new List<User>());
+    if (Model.GroupDetail is not null)
+    {
+        group = Model.GroupDetail;
+    }
+    List<User> allUsers = userManager.Users.Where(u => !string.IsNullOrEmpty(u.Lname) && !string.IsNullOrEmpty(u.Fname)).ToList();
+    foreach (User u in group.Users)
+    {
+        allUsers.Remove(u);
+    }
+}
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <td>Last Name</td>
+            <td>First Name</td>
+            <td>User Name</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (User user in group.Users)
+    {
+        <tr>
+            <td>@user.Lname</td>
+            <td>@user.Fname</td>
+            <td>@user.UserName</td>
+            <td>
+                <form asp-action="UserEdit" asp-route-Id="@user.Id" asp-route-groupId="@group.Id" asp-route-groupName="@group.Name" method="post">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<form asp-action="UserEdit" method="post">
+    <label>Add a user</label>
+    <select name="id">
+        @foreach (User u1 in allUsers)
+        {
+            <option value = "@u1.Id">@u1.Lname, @u1.Fname</option>
+        }
+    </select>
+    <input type="hidden" name="groupId" value="@group.Id" />
+    <input type="hidden" name="groupName" value="@group.Name" />
+    <button type="submit" class="btn btn-sm btn-primary">Add</button>
+</form>
+<a asp-action="Index">Back to List</a>

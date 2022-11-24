@@ -46,6 +46,7 @@ namespace ProjectCodeX
             builder.Services.AddTransient<UserViewModel>();
             builder.Services.AddTransient<DonationViewModel>();
             builder.Services.AddTransient<ContactViewModel>();
+            builder.Services.AddTransient<GroupViewModel>();
 
             //Email service setup
             if (!string.IsNullOrEmpty(builder.Configuration.GetValue<string>("SENDGRID_API_KEY")))
@@ -120,17 +121,13 @@ namespace ProjectCodeX
                             var user = userManager.CreateAsync(adminUser, password).Result;
                             if (user.Succeeded)
                             {
-                                var result = userManager.AddToRoleAsync(adminUser, "Admin").Result;
-                            }
-                            else
-                            {
-                                throw new Exception(user.Errors.ToString());
+                                var result = userManager.AddToRoleAsync(adminUser, adminRole.Name).Result;
                             }
                         }
                         else
                         {
                             var roles = userManager.GetRolesAsync(userInDB).Result;
-                            if (!userManager.IsInRoleAsync(userInDB, "Admin").Result)
+                            if (!userManager.IsInRoleAsync(userInDB, adminRole.Name).Result)
                             {
                                 var example = userManager.AddToRoleAsync(userInDB, adminRole.Name).Result;
                             }
@@ -147,9 +144,9 @@ namespace ProjectCodeX
                 if (professorUser != null)
                 {
                     var roles = userManager.GetRolesAsync(professorUser).Result;
-                    if (!userManager.IsInRoleAsync(professorUser, "Admin").Result)
+                    if (!userManager.IsInRoleAsync(professorUser, adminRole.Name).Result)
                     {
-                        var result = userManager.AddToRoleAsync(professorUser, "Admin").Result;
+                        var result = userManager.AddToRoleAsync(professorUser, adminRole.Name).Result;
                     }
                 }
             }

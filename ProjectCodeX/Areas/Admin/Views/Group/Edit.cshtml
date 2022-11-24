@@ -1,5 +1,30 @@
-﻿<!--
-    TODO: Display Group/Committee Information
-    TODO: Give Admins ability to add/remove users
-    TODO: Add field to describe member responsibilities in role (ex: leader, setup, etc.)
--->
+﻿@{
+    Group group = new("", "", 0, new List<User>());
+    if (Model.GroupDetail is not null)
+    {
+        group = Model.GroupDetail;
+
+    }
+}
+<form asp-action="Edit" method="post">
+
+    <div class="form-group" hidden="@string.IsNullOrEmpty(group.Id)">
+        <label for="Fname">Group Id: </label>
+        <input type="text" id="Id" name="Id" class="form-control" value="@group.Id" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Name: </label>
+        <input type="text" id="Name" name="Name" class="form-control" value="@group.Name"/>
+    </div>
+
+    <ol>
+        @foreach (User user in group.Users)
+        {
+            <li>@user.Lname, @user.Fname</li>
+        }
+    </ol>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+</form>
