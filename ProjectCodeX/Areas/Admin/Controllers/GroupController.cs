@@ -136,8 +136,8 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                     var usersInRole = _userManager.GetUsersInRoleAsync(groupName).Result;
                     if (usersInRole is not null)
                     {
-                        usersInRole.Where(u => u.Id == id).FirstOrDefault();
-                        if (usersInRole is not null && usersInRole.Count > 0)
+                        var ourUser = usersInRole.Where(u => u.Id == id).FirstOrDefault();
+                        if (ourUser is not null)
                         {
                             var removedSucessfully = _userManager.RemoveFromRoleAsync(existingUser, groupName).Result;
                         }
