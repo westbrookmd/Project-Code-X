@@ -21,3 +21,14 @@ function displayAdminLinks() {
         x.style.display = "block";
     }
 }
+
+function addRow() {
+    var tbl = document.getElementById("purchLineTable");
+    var row = tbl.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    cell1.innerHTML = "<input type=\"text\" id=\"itemName\" name=\"name\" value=\"\" />";
+    cell2.innerHTML = "<input type=\"text\" id=\"qnty\" name=\"qnty\" value=\"\" />";
+    cell3.innerHTML = "<input type=\"text\" id=\"cost\" name=\"cost\" value=\"\" />";
+}

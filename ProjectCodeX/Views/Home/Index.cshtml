@@ -2,11 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<link rel="stylesheet" href="~/css/carousel.css" asp-append-version="true"/>
-
-<!--
-    todo: create homepage that looks attractive
--->
+<link rel="stylesheet" href="~/css/carousel.css" asp-append-version="true" />
 
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 
@@ -59,4 +55,46 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+</div>
+
+<div class="text-center">
+    <p>
+        Whether it's literary classics such as <cite>Charlotte's Web</cite> by E. B. White, modern day hits such as <cite>Knight Owl</cite> by Christopher Denise, or even the textbooks used by schools all over the country, Bookwormz strives to ensure that the love of reading is instilled in today's children so that they'll become tomorrow's inspirations.
+    </p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="card-header">About Us</h3>
+            <div class="card-body">
+                <p>Here at Bookwormz, our goal is to ensure that books of all kinds are made readily available to children of all ages.</p>
+            </div>
+            <div class="card-footer"><a class="card-link" asp-action="About">Learn More</a></div>
+        </div>
+
+        <div class="col">
+            <h3 class="card-header">Events</h3>
+            <div class="card-body">
+                <p>Our organization regularly hosts book fairs to help get books into the hands of children, along with other fun events that the whole family can enjoy!</p>
+            </div>
+            <div class="card-footer"><a class="card-link" asp-controller="Event" asp-action="Index">Learn More</a></div>
+        </div>
+
+        <div class="col">
+            <h3 class="card-header">News</h3>
+            <div class="card-body">
+                <p>Keep up with the latest happenings, and see the results of your generous contributions!</p>
+            </div>
+            <div class="card-footer"><a class="card-link" asp-controller="News" asp-action="Index">Latest News</a></div>
+        </div>
+
+        <div class="col">
+            <h3 class="card-header">Donate</h3>
+            <div class="card-body">
+                <p>Our mission is made possible in part thanks to donations from kind individuals such as you. Thank you.</p>
+            </div>
+            <div class="card-footer"><a class="card-link" asp-controller="Donation" asp-action="Index">Donate Today</a></div>
+        </div>
+    </div>
 </div>
