@@ -5,5 +5,10 @@
     width: 50%;
     height: 50%;
     padding: 25px;
-    margin: 25px;
+    margin-top: 25px;
+    margin-left: 25%;
+}
+
+.carousel-caption {
+    text-shadow: 1px 1px 1px black;
 }

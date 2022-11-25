@@ -1,6 +1,33 @@
 ﻿<!DOCTYPE html>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    User user = await UserManager.GetUserAsync(User);
+    string firstName;
+    if (user == null)
+    {
+        firstName = "User";
+    }
+    else
+    {
+        if (user.Fname == null)
+        {
+            firstName = "User";
+        }
+
+        else
+        {
+            firstName = user.Fname;
+        }
+    }
+}
+
 <!--
     TODO: Add hamburger menu to allow users to view links to different admin pages they can access
+    TODO: Style hamburger menu so that button does not shift when opening
 -->
 <html lang="en">
 <head>
@@ -16,30 +43,46 @@
     <header>
         <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Project_Code-X_Logo.jpg" class="logo" /></a>
         <div class="topnav" id="myTopnav">
-            <a asp-area="" asp-controller="Event" asp-action="Index">Events</a>
-            <a asp-area="" asp-controller="News" asp-action="Index">News</a>
-            <a asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
             @{
                 if (User.Identity.IsAuthenticated)
                 {
                     if (User.IsInRole("Admin"))
                     {
-                        <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Area</a>
+                        <div class="adminMenu">
+                            <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+                            <a href="javascript:void(0);" onclick="displayAdminLinks()">
+                                Admin Controls &emsp;
+                            </a>
+                            <br>
+                        </div>
                     }
-                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="login">Logout</a>
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="login">Logout @firstName</a>
 
                 }
-                else {
+                else
+                {
                     <a asp-area="Identity" asp-page="/Account/Login" class="login">Register/Login</a>
                 }
             }
-            <a href="~/js/site.js" class="icon" onclick="myFunction()">
+            <div class="mainLinks">
+                <a asp-area="" asp-controller="Event" asp-action="Index">Events</a>
+                <a asp-area="" asp-controller="News" asp-action="Index">News</a>
+                <a asp-area="" asp-controller="User" asp-action="Index">My Profile</a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
             </a>
         </div>
+        <div id="adminLinks">
+            <a asp-area="Admin" asp-controller="Event" asp-action="Index">Event Management</a><br>
+            <a asp-area="Admin" asp-controller="News" asp-action="Index">News Management</a><br>
+            <a asp-area="Admin" asp-controller="Funds" asp-action="Index">Fund Management</a><br>
+            <a asp-area="Admin" asp-controller="Group" asp-action="Index">Group Management</a><br>
+            <a asp-area="Admin" asp-controller="UserData" asp-action="Index">User Management</a><br>
+        </div>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 align-content-center">
             @RenderBody()
         </main>
     </div>

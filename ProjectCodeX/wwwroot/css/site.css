@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 table, th, td {
@@ -25,11 +25,19 @@ table {
     width: 100%;
 }
 
+main {
+    
+}
+
+.mainLinks {
+    float: left;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
     background-color: #333;
     overflow: hidden;
-    margin-bottom: 25px;
+    position: relative;
 }
 
     /* Style the links inside the navigation bar */
@@ -47,17 +55,43 @@ table {
         float: right;
     }
 
-        /* Change the color of links on hover */
-        .topnav a:hover {
-            background-color: #ddd;
+    .topnav .adminMenu {
+        float: left;
+    }
+
+    #adminLinks {
+        display: none;
+        float: left;
+        margin-left: 50px;
+        background-color: white;
+        border: 2.5px solid black;
+
+    }
+
+        #adminLinks a {
+            float: left;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
             color: black;
         }
 
-        /* Add an active class to highlight the current page */
-        .topnav a.active {
-            background-color: #04AA6D;
-            color: white;
-        }
+    .topnav #mainLinks {
+        
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    /* Add an active class to highlight the current page */
+    .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
 
     /* Hide the link that should open and close the topnav on small screens */
     .topnav .icon {
@@ -73,13 +107,19 @@ table {
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 600px) {
-    .topnav a:not(:first-child) {
+    .topnav .mainLinks a {
         display: none;
     }
 
     .topnav a.icon {
         float: right;
         display: block;
+    }
+
+    .topnav .login {
+        position: fixed;
+        right: 35px;
+        top: 0px;
     }
 }
 
