@@ -6,6 +6,7 @@ using ProjectCodeX.Data;
 using ProjectCodeX.Models;
 using System.Diagnostics;
 using System.Net;
+using System.Text.Json;
 
 namespace ProjectCodeX.Controllers
 {
@@ -37,6 +38,12 @@ namespace ProjectCodeX.Controllers
                 _viewModel.EventDetail = eventDetail;
             }
             return View(_viewModel);
+        }
+        [HttpGet]
+        public string EventsAsJson()
+        {
+            _viewModel.Events = _dbContext.Events.ToList();
+            return JsonSerializer.Serialize(_viewModel.Events);
         }
     }
 }
