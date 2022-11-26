@@ -1,6 +1,6 @@
-﻿<!--
-    TODO: Display contact info for outside contacts.
--->
+﻿@{
+    List<Contact> contacts = Model.Contacts;
+}
 
 <table>
     <thead>
@@ -12,6 +12,38 @@
             <th>State</th>
             <th>Phone</th>
             <th>Email</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
+    <tbody>
+        @if(contacts is not null){
+            @foreach(var contact in contacts){
+                <tr>
+                    <td>@contact.Lname, @contact.Fname</td>
+                    <td>@contact.Company</td>
+                    <td>@contact.Address</td>
+                    <td>@contact.City</td>
+                    <td>@contact.State</td>
+                    <td>@contact.Phone</td>
+                    <td>@contact.Email</td>
+                    <td>
+                        <form asp-action="Edit" asp-route-id="@contact.ContactId" method="get">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Edit
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@contact.ContactId" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
 </table>
+<button class="btn btn-primary"><a asp-area="Admin" asp-controller="Contact" asp-action="Edit" class="text-light">Add Contact</a></button>

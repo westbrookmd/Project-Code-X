@@ -171,7 +171,7 @@ header {
     CSS styles for News pages
 */
 .recentNews {
-    background-color: rgb(20, 117, 175)
+    /*background-color: rgb(20, 117, 175);*/
 }
 
     .recentNews .news-title {
@@ -197,10 +197,11 @@ header {
 
 .ct-blog .inner {
     background-color: #FFF;
-    padding: 10px;
+    padding: 15px;
     transition: all 0.2s ease-in-out 0s;
     cursor: pointer;
     height: 100%;
+    width: fit-content;
     border: 2.5px solid black;
 }
 

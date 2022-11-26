@@ -34,16 +34,22 @@
         </div>
     </div>
 </div>
-<script src="~/js/calendar.js"></script>
 
 <form asp-controller="Event" asp-action="Details" method="get">
     <p>
-    Event ID: <input type="text" name="id" />
-    <input type="submit" value="Search" />
+        Event Date: <input type="text" name="id" />
+        <input type="submit" value="Search" />
     </p>
 </form>
+<div>
+    <h1>Details: </h1>
+    <p id="details">
+
+    </p>
+</div>
+
 <div class="upcomingEvents">
-    @foreach(Event e in events)
+    @foreach (Event e in events)
     {
         <h1 id="title">Event Title: @e.Name</h1>
         <p>Event Date: @e.Date.Value.ToShortDateString()</p>
@@ -51,7 +57,6 @@
         <p><b>Location:</b> @e.Location </p>
         <p><b>Type:</b> @e.EventType </p>
         <p><b>Notes:</b> @e.Notes </p>
-
     }
-    </div>
-
+</div>
+<script src="~/js/calendar.js"></script>

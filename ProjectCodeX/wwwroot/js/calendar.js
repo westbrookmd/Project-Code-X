@@ -1,8 +1,4 @@
-﻿/* Code to grab model data?
- * var events = @Html.Raw(JSON.Encode(Model.Events))
- * */
-
-function generate_year_range(start, end) {
+﻿function generate_year_range(start, end) {
     var years = "";
     for (var year = start; year <= end; year++) {
         years += "<option value='" + year + "'>" + year + "</option>";
@@ -18,9 +14,6 @@ selectMonth = document.getElementById("month");
 
 
 createYear = generate_year_range(1970, 2050);
-/** or
- * createYear = generate_year_range( 1970, currentYear );
- */
 
 document.getElementById("year").innerHTML = createYear;
 
@@ -108,13 +101,11 @@ function showCalendar(month, year) {
                 row.appendChild(cell);
                 date++;
             }
-
-
         }
 
         tbl.appendChild(row);
     }
-
+    addMouseEvents();
 }
 
 function daysInMonth(iMonth, iYear) {
@@ -126,25 +117,46 @@ function daysInMonth(iMonth, iYear) {
 //      add code to give identify cells which correspond to event dates
 //      add code for cells to display basic event info on hover
 //      add code for cells to display detailed event info on click
-document.querySelectorAll("td").forEach(e => e.addEventListener('click', function (event) {
-    if (event.target.style.color === 'red' || event.target.style.color === 'green') {
-        event.target.style.color = 'black';
-    }
-    else {
-        //Apply special formatting to selecting today's date
-        if (e.className === 'date-picker selected') {
-            event.target.style.color = 'green';
+
+function addMouseEvents() {
+    document.querySelectorAll("td").forEach(e => e.addEventListener('click', function (event) {
+        if (event.target.style.color === 'red' || event.target.style.color === 'green') {
+            event.target.style.color = 'black';
         }
         else {
-            event.target.style.color = 'red';
+            //Apply special formatting to selecting today's date
+            if (e.className === 'date-picker selected') {
+                event.target.style.color = 'green';
+            }
+            else {
+                event.target.style.color = 'red';
+            }
         }
+        thisYear = event.target.dataset.year;
+        thisMonth = event.target.dataset.month;
+        thisDay = event.target.innerHTML;
+        showEvent(thisYear, thisMonth, thisDay);
+    }));
+
+    document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseover', function onMouseOver(event) {
+        event.target.style.backgroundColor = 'lightblue';
+    }));
+
+    document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseout', function onMouseOut(event) {
+        event.target.style.backgroundColor = null;
+    }));
+}
+
+function showEvent(year, month, day) {
+    while (month.toString().length < 2) {
+        month = '0' + month;
     }
-}));
+    while (day.toString().length < 2) {
+        day = '0' + day;
+    }
 
-document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseover', function onMouseOver(event) {
-    event.target.style.backgroundColor = 'lightblue';
-}));
-
-document.querySelectorAll(".date-picker").forEach(e => e.addEventListener('mouseout', function onMouseOut(event) {
-    event.target.style.backgroundColor = null;
-}));
+    p = document.getElementById("details");
+    t = document.createTextNode("");
+    p.innerHTML = "Year: " + year + "</br>Month: " + month + "</br>Day: " + day;
+    p.appendChild(t);
+}
