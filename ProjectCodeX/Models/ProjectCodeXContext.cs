@@ -100,7 +100,7 @@ namespace ProjectCodeX.Models
 
                 entity.Property(e => e.Cost).HasColumnType("smallmoney");
 
-                entity.Property(e => e.Date).HasColumnType("date");
+                entity.Property(e => e.Date).HasColumnType("datetime2");
 
                 entity.Property(e => e.EventType)
                     .HasMaxLength(50)
