@@ -35,6 +35,7 @@ public class NewsController : Controller
         var postDetail = _dbContext.News.Find(id);
         if (postDetail is not null)
         {
+            ViewBag.Status = "Edit";
             _viewModel.NewsDetail = postDetail;
             return View(_viewModel);
         }

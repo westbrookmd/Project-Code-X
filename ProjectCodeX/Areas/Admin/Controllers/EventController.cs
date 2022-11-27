@@ -25,7 +25,6 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Status = "Admin";
             _viewModel.Events = _dbContext.Events.ToList();
             return View(_viewModel);
         }
@@ -35,6 +34,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
             var eventDetail = _dbContext.Events.Find(id);
             if (eventDetail is not null)
             {
+                ViewBag.Status = "Edit";
                 _viewModel.EventDetail = eventDetail;
                 return View(_viewModel);
             }

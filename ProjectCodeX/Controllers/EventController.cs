@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
 using System.Diagnostics;
@@ -30,6 +31,11 @@ namespace ProjectCodeX.Controllers
             return View(_viewModel);
         }
 
+        public IActionResult Test()
+        {
+            return View();
+        }
+
         public IActionResult Details(int id)
         {
             var eventDetail = _dbContext.Events.Find(id);
@@ -39,11 +45,12 @@ namespace ProjectCodeX.Controllers
             }
             return View(_viewModel);
         }
+
         [HttpGet]
-        public string EventsAsJson()
+        public JsonResult EventsAsJson()
         {
-            _viewModel.Events = _dbContext.Events.ToList();
-            return JsonSerializer.Serialize(_viewModel.Events);
+            return Json(_dbContext.Events.ToArray());
+
         }
     }
 }

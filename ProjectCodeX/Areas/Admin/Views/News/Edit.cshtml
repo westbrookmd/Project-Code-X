@@ -34,6 +34,11 @@
         <input type="hidden" id="articleID" name="ArticleId" value="@news.ArticleId" />
         <input type="hidden" id="viewCount" name="ViewCount" value="@news.ViewCount" />
         <button type="submit" class="btn btn-primary">Submit</button>
-        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+
+        @if (ViewBag.Status == "Edit")
+        {
+            <button type="button" class="btn btn-danger">Delete</button>
+        }
+        <button type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
     </form>
 </div>

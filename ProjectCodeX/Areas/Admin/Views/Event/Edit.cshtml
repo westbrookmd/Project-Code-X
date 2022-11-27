@@ -37,6 +37,10 @@
         <input type="hidden" id="cost" name="cost" value="0" />
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>
+        @if (ViewBag.Status == "Edit")
+        {
+            <button type="button" class="btn btn-danger">Delete</button>
+        }
         <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
     </form>
 </div>
@@ -48,6 +52,6 @@
         Event ID: <input type="text" name="id" />
         <input type="submit" value="Search" />
         </p>
-    </form> 
+    </form>
     <a asp-action="Index">Back to List</a>
 </div>
