@@ -33,7 +33,6 @@ public class EventData : IEventData
 		_db.SaveData("dbo.spEvent_Insert", new
 		{
 			eventModel.Date,
-			eventModel.Time,
 			eventModel.Location,
 			eventModel.EventType,
 			eventModel.Attendees,

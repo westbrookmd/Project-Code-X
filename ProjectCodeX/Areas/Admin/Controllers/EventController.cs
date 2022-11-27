@@ -58,7 +58,6 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                     {
                         eventDbObject.Name = e.Name;
                         eventDbObject.Date = e.Date;
-                        eventDbObject.Time = e.Time;
                         eventDbObject.Location = e.Location;
                         eventDbObject.EventType = e.EventType;
                         eventDbObject.Notes = e.Notes;
