@@ -64,7 +64,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
                         _dbContext.Events.Update(eventDbObject);
                         _dbContext.SaveChanges();
-                        return Edit(id);
+                        return Edit(eventDbObject.EventId);
                     }
                     else
                     {

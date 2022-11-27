@@ -4,10 +4,16 @@
 -->
 @{
     Event eventDetail = Model.EventDetail;
+    string dateTimeFormatted = "";
     if (Model.EventDetail is null)
     {
         eventDetail = new();
     }
+    if (eventDetail.Date is not null)
+    {
+        dateTimeFormatted = eventDetail.Date.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss");
+    }
+    
 }
 
 <div class="event-Form">
@@ -20,7 +26,7 @@
 
         <div class="form-group">
         <label for="eventDate">Event Date and Time: </label><br />
-        <input type="datetime-local" id="Date" name="Date" required value="@eventDetail.Date"/><br />
+        <input type="datetime-local" id="Date" name="Date" required value="@dateTimeFormatted"/><br />
         </div>
 
         <div class="form-group">
@@ -29,7 +35,7 @@
         </div>
 
         <label for="notes">Additional Notes: </label><br />
-        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements." value="@eventDetail.Notes"></textarea>
+        <textarea rows="4" cols="50" id="notes" name="notes" form="eventForm" placeholder="Please include a brief event summary and any considerations that staff and/or attendees should make note of for the event, such as venue masking requirements.">@eventDetail.Notes</textarea>
 
         <input type="hidden" id="eventID" name="eventID" value="@eventDetail.EventId" />
         <input type="hidden" id="attendees" name="attendees" value="0" />
