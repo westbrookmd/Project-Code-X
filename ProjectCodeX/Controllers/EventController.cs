@@ -33,8 +33,10 @@ namespace ProjectCodeX.Controllers
 
         public IActionResult Test()
         {
+            ViewBag.Status = "Calendar";
             return View();
         }
+
 
         public IActionResult Details(int id)
         {
