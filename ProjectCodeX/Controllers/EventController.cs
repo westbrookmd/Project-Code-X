@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
 using System.Diagnostics;
 using System.Net;
+using System.Text.Json;
 
 namespace ProjectCodeX.Controllers
 {
@@ -26,8 +28,16 @@ namespace ProjectCodeX.Controllers
         public IActionResult Index()
         {
             _viewModel.Events = _dbContext.Events.ToList();
+            ViewBag.Status = "Calendar";
             return View(_viewModel);
         }
+
+        public IActionResult Grid()
+        {
+            _viewModel.Events = _dbContext.Events.ToList();
+            return View(_viewModel);
+        }
+
 
         public IActionResult Details(int id)
         {
@@ -37,6 +47,28 @@ namespace ProjectCodeX.Controllers
                 _viewModel.EventDetail = eventDetail;
             }
             return View(_viewModel);
+        }
+
+        [HttpGet]
+        public JsonResult EventsAsJson(DateTime start, DateTime end)
+        {
+            var dbEvents = _dbContext.Events.ToArray();
+           
+
+            var events = new List<EventCalendarDisplayModel>();
+
+            for (int i = 0; i < dbEvents.Length; i++)
+            {
+                events.Add(new EventCalendarDisplayModel()
+                {
+                    id = dbEvents[i].EventId,
+                    title = dbEvents[i].Name,
+                    start = dbEvents[i].Date.Value.ToString(),
+                    end = dbEvents[i].Date.Value.AddHours(1).ToString(),
+                    allDay = false
+                });
+            }
+            return Json(events.ToArray());
         }
     }
 }

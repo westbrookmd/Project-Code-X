@@ -1,0 +1,26 @@
+﻿<div>
+    <form>
+        <input type="text" id="purchID" name="purchID" value="" />
+        <table id="purchLineTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity Purchased</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="itemName" name="name" value="" /></td>
+                    <td><input type="text" id="qnty" name="qnty" value="" /></td>
+                    <td><input type="text" id="cost" name="cost" value="" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <button type="button" class="btn btn-primary" onclick="addRow()">Add another line.</button>
+
+    <textarea placeholder="Additional notes about the purchase to be added here.">
+
+    </textarea>
+</div>

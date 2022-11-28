@@ -22,9 +22,22 @@
 <div class="upcomingEvents">
     @if(eventDetail is not null)
     {
-        <h1 id="title">Event Title: @eventDetail.EventId</h1>
+        <h1 id="title">Event Title: @eventDetail.Name</h1>
             <p>Event Date:  @eventDetail.Date</p>
-        <p>Details: <b>Location:</b> @eventDetail.Location <b>Type:</b> @eventDetail.EventType <b>Number of Attendees:</b> @eventDetail.Attendees <b>Amount Raised:</b> @eventDetail.AmountRaised  <b>Cost:</b> @eventDetail.Cost <b>Notes:</b> @eventDetail.Notes</p>
+        <p>
+            Details: @eventDetail.Notes<br>
+            <b>Location:</b> @eventDetail.Location<br>
+            <b>Type:</b> @eventDetail.EventType<br>
+            <b>Number of Attendees:</b> @eventDetail.Attendees<br>
+            <b>Amount Raised:</b> @eventDetail.AmountRaised<br>
+            <b>Admission Fee:</b> @if (eventDetail.Cost > 0)
+            {
+                @eventDetail.Cost
+            }
+            else {
+                <text>Free</text>
+            }
+        </p>
     }
     else
     {
@@ -41,5 +54,9 @@
         </p>
     </form> 
 
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="btn btn-primary" id="@eventDetail.EventId">Update Event</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

@@ -264,7 +264,7 @@ namespace ProjectCodeX.Migrations
                         .HasColumnType("smallmoney");
 
                     b.Property<DateTime?>("Date")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EventType")
                         .HasMaxLength(50)
@@ -285,9 +285,6 @@ namespace ProjectCodeX.Migrations
                         .HasMaxLength(500)
                         .IsUnicode(false)
                         .HasColumnType("varchar(500)");
-
-                    b.Property<TimeSpan?>("Time")
-                        .HasColumnType("time");
 
                     b.HasKey("EventId");
 

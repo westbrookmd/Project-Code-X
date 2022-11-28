@@ -1,5 +1,4 @@
-﻿<link rel="stylesheet" href="~/css/news.css" />
-@{
+﻿@{
     List<News> news = Model.News;
 }
 <section class="recentNews">
@@ -15,12 +14,13 @@
                         </div>
                         <div class="ct-blog-content">
                             <div class="ct-blog-date">
-                                <span>October</span><strong>12</strong>
+                                @news[i].PublishDate.ToShortDateString();
                             </div>
                             <h3 class="ct-blog-header">
                                 @news[i].Headline
                             </h3>
                         </div>
+                        <p class="text-center">@news[i].Summary</p>
                     </div>
                 </div>
             }

@@ -25,8 +25,8 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Status = "Admin";
             _viewModel.Events = _dbContext.Events.ToList();
+            ViewBag.Status = "Calendar";
             return View(_viewModel);
         }
 
@@ -35,6 +35,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
             var eventDetail = _dbContext.Events.Find(id);
             if (eventDetail is not null)
             {
+                ViewBag.Status = "Edit";
                 _viewModel.EventDetail = eventDetail;
                 return View(_viewModel);
             }
@@ -58,14 +59,13 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                     {
                         eventDbObject.Name = e.Name;
                         eventDbObject.Date = e.Date;
-                        eventDbObject.Time = e.Time;
                         eventDbObject.Location = e.Location;
                         eventDbObject.EventType = e.EventType;
                         eventDbObject.Notes = e.Notes;
 
                         _dbContext.Events.Update(eventDbObject);
                         _dbContext.SaveChanges();
-                        return Edit(id);
+                        return Edit(eventDbObject.EventId);
                     }
                     else
                     {

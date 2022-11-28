@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjectCodeX.Models;
 using System.Security.Claims;
 
 namespace ProjectCodeX.Controllers
 {
+    [Authorize]
     public class DonationController : Controller
     {
         private readonly ILogger _logger;

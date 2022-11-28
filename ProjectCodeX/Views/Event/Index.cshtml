@@ -1,57 +1,61 @@
-@{
-    List<Event> events = Model.Events;
-}
-<link rel="stylesheet" href="~/css/events.css" />
+﻿<!-- CSS Includes -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.css">
 
-<div class="wrapper">
-    <div class="container-calendar">
-        <h3 id="monthAndYear"></h3>
-        <div class="button-container-calendar">
-            <button id="previous" onclick="previous()">&#8249;</button>
-            <button id="next" onclick="next()">&#8250;</button>
-        </div>
-        <table class="table-calendar" id="calendar" data-lang="en">
-            <thead id="thead-month"></thead>
-            <tbody id="calendar-body"></tbody>
-        </table>
-        <div class="footer-container-calendar">
-            <label for="month">Jump To:</label>
-            <select id="month" onchange="jump()">
-                <option value="0">Jan</option>
-                <option value="1">Feb</option>
-                <option value="2">Mar</option>
-                <option value="3">Apr</option>
-                <option value="4">May</option>
-                <option value="5">Jun</option>
-                <option value="6">Jul</option>
-                <option value="7">Aug</option>
-                <option value="8">Sep</option>
-                <option value="9">Oct</option>
-                <option value="10">Nov</option>
-                <option value="11">Dec</option>
-            </select>
-            <select id="year" onchange="jump()"></select>
-        </div>
-    </div>
-</div>
-<script src="~/js/calendar.js"></script>
+<style type="text/css">
 
-<form asp-controller="Event" asp-action="Details" method="get">
-    <p>
-    Event ID: <input type="text" name="id" />
-    <input type="submit" value="Search" />
-    </p>
-</form>
-<div class="upcomingEvents">
-    @foreach(Event e in events)
-    {
-        <h1 id="title">Event Title: @e.Name</h1>
-        <p>Event Date: @e.Date.Value.ToShortDateString()</p>
-        <p>Time: @e.Time </p>
-        <p><b>Location:</b> @e.Location </p>
-        <p><b>Type:</b> @e.EventType </p>
-        <p><b>Notes:</b> @e.Notes </p>
-
+    .field-validation-error {
+        color: #ff0000;
     }
-    </div>
 
+</style>
+<div class="container">
+    <div id='calendar'></div>
+</div>
+
+<!-- JS includes -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.16.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.0.1/fullcalendar.min.js"></script>
+
+<script type="text/javascript">
+    var route = '@Url.RouteUrl(new{action="Details", controller="Event", id="_0_"})';
+
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'addEventButton',
+                right: 'month,agendaWeek,agendaDay'
+            },
+
+            customButtons: {
+                addEventButton: {
+                    text: 'Grid View',
+                    click: function () {
+                        window.location.href = '@Url.RouteUrl(new{action="Grid", controller="Event"})'
+                    }
+                }
+            },
+
+            firstDay: 1, //The day that each week begins (Monday=1)
+            slotMinutes: 60,
+            events: '@Url.RouteUrl(new{action="EventsAsJson", controller="Event"})',
+
+
+            eventClick: function (event) {
+                var eventObj = event;
+
+
+                window.open(route.replace('_0_', event.id));
+
+
+                //window.open(route);
+            }
+        });
+    });
+</script>

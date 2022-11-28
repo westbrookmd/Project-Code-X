@@ -25,7 +25,7 @@
     {
         currentUser = new();
     }
-    
+
 }
 
 <div>
@@ -34,7 +34,7 @@
         <label for="uName">User Name:</label><br />
         <input type="text" id="UserName" name="uName" value="@currentUser.UserName" readonly /><br />
         <label for="uID">User ID:</label><br />
-        <input type="text" id="Id" name="Id" value="@currentUser.Id" readonly size="40"/><br />
+        <input type="text" id="Id" name="Id" value="@currentUser.Id" readonly size="40" /><br />
         <label for="fName">First Name:</label><br />
         <input type="text" id="fName" name="fName" value="@currentUser.Fname" /><br />
         <label for="lName">Last Name:</label><br />
@@ -100,6 +100,6 @@
         </datalist><br />
         <br />
         <button type="submit" class="btn btn-primary">Submit</button>
-        <input type="button" class="btn btn-secondary" value="Cancel" onclick="document.getElementById('userForm').reset();"/>
+        <button type="button" class="btn btn-secondary" onclick="history.back();">Cancel</button>
     </form>
 </div>

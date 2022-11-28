@@ -5,10 +5,6 @@
         news = new();
     }
 }
-<!--
-    TODO: Field for publish date should show the date article was published. If adding new article, value should equal today's date
--->
-
 <div class="news-Form">
     <form id="newsForm" asp-action="Edit" method="post">
         
@@ -19,10 +15,10 @@
 
 
         <label for="content">Article content: </label><br />
-        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required value="@news.Content"></textarea>
+        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required value="@news.Content"></textarea><br />
 
         <label for="content">Article summary: </label><br />
-        <textarea rows="4" cols="50" id="summary" name="summary" form="newsForm" placeholder="Insert article summary here" required value="@news.Summary"></textarea>
+        <textarea rows="4" cols="50" id="summary" name="summary" form="newsForm" placeholder="Insert a brief summary to appear below the headline on the News Index here" required value="@news.Summary"></textarea>
 
 
         <div class="form-group">
@@ -34,6 +30,11 @@
         <input type="hidden" id="articleID" name="ArticleId" value="@news.ArticleId" />
         <input type="hidden" id="viewCount" name="ViewCount" value="@news.ViewCount" />
         <button type="submit" class="btn btn-primary">Submit</button>
-        <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+
+        @if (ViewBag.Status == "Edit")
+        {
+            <button type="button" class="btn btn-danger">Delete</button>
+        }
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
     </form>
 </div>
