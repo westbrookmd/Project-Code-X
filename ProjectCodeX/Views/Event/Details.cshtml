@@ -20,10 +20,11 @@
 
 
 <div class="upcomingEvents">
-    @if(eventDetail is not null)
+    @if (eventDetail is not null)
     {
         <h1 id="title">Event Title: @eventDetail.Name</h1>
-            <p>Event Date:  @eventDetail.Date</p>
+        <p>Event Date:  @eventDetail.Date.Value.ToShortDateString()</p>
+        @*<p>Start Time: @eventDetail.Date.Value.ToShortTimeString()</p>*@
         <p>
             Details: @eventDetail.Notes<br>
             <b>Location:</b> @eventDetail.Location<br>
@@ -34,7 +35,8 @@
             {
                 @eventDetail.Cost
             }
-            else {
+            else
+            {
                 <text>Free</text>
             }
         </p>
@@ -43,20 +45,23 @@
     {
         <h1>Event not found</h1>
     }
-    
+
 </div>
 
 <div>
     <form asp-controller="Event" asp-action="Details" method="get">
         <p>
-        Event ID: <input type="text" name="id" />
-        <input type="submit" value="Search" />
+            Event ID: <input type="text" name="id" />
+            <input type="submit" value="Search" />
         </p>
-    </form> 
+    </form>
 
     @if (User.IsInRole("Admin"))
     {
-        <a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="btn btn-primary" id="@eventDetail.EventId">Update Event</a>
+        <a asp-area="Admin" asp-controller="Event" asp-action="Edit" class="btn btn-primary" asp-route-id="@eventDetail.EventId">Update Event</a>
+        <a asp-area="Admin" asp-controller="Event" asp-action="Delete" asp-route-id="@eventDetail.EventId" class="btn btn-danger">Delete</a>
     }
-    <a asp-action="Index">Back to List</a>
+    <p>
+        <a asp-action="Index">Back to List</a>
+    </p>
 </div>
