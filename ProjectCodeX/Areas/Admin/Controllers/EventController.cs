@@ -26,6 +26,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
         public IActionResult Index()
         {
             _viewModel.Events = _dbContext.Events.ToList();
+            ViewBag.Status = "Calendar";
             return View(_viewModel);
         }
 

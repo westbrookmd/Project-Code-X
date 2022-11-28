@@ -17,7 +17,7 @@
 </div>
 
 @if(User.IsInRole("Admin")){
-    <button class="btn btn-primary"><a asp-area="Admin" asp-controller="News" asp-action="Edit" class="text-light" id="@news.ArticleId">Update Article</a></button>
+    <a asp-area="Admin" asp-controller="News" asp-action="Edit" class="btn btn-primary" id="@news.ArticleId">Update Article</a>
 }
 
 <a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-primary">Back to Index</a>

@@ -1,32 +1,32 @@
 ﻿@{
-    List<News> news = Model.News;
+    List<Event> events = Model.Events;
 }
-<section class="recentNews">
+<section class="recentnews">
     <div class="container">
-        <h2 class="news-title">Recent News</h2>
+        <h2 class="news-title">Recent events</h2>
         <div class="row">
-            @for (int i = 0; i < news.Count; i++)
+            @for (int i = 0; i < events.Count; i++)
             {
                 <div class=" = ct-blog col-sm-6 col-md-4">
                     <div class="inner">
                         <div class="fauxcrop">
-                                <a asp-controller="News" asp-action="Article" asp-route-id="@news[i].ArticleId"><img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
+                            <a asp-controller="Event" asp-action="Details" asp-route-id="@events[i].EventId"><img alt="events Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
                         </div>
                         <div class="ct-blog-content">
                             <div class="ct-blog-date">
-                                @news[i].PublishDate.ToShortDateString();
+                                @events[i].Date.Value.ToShortDateString();
                             </div>
                             <h3 class="ct-blog-header">
-                                @news[i].Headline
+                                @events[i].Name
                             </h3>
                         </div>
-                        <p class="text-center">@news[i].Summary</p>
                     </div>
                 </div>
             }
         </div>
         <div class="btn-news btn-contests">
-            <a href="#">VIEW ALL NEWS</a>
+            <a href="#">VIEW ALL EVENTS</a>
         </div>
     </div>
 </section>
+<a asp-action="Index">Click here for Calendar View</a>

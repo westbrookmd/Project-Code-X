@@ -5,10 +5,6 @@
         news = new();
     }
 }
-<!--
-    TODO: Field for publish date should show the date article was published. If adding new article, value should equal today's date
--->
-
 <div class="news-Form">
     <form id="newsForm" asp-action="Edit" method="post">
         
@@ -39,6 +35,6 @@
         {
             <button type="button" class="btn btn-danger">Delete</button>
         }
-        <button type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
     </form>
 </div>

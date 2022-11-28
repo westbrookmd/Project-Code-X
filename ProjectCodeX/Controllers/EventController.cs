@@ -28,13 +28,14 @@ namespace ProjectCodeX.Controllers
         public IActionResult Index()
         {
             _viewModel.Events = _dbContext.Events.ToList();
+            ViewBag.Status = "Calendar";
             return View(_viewModel);
         }
 
-        public IActionResult Test()
+        public IActionResult Grid()
         {
-            ViewBag.Status = "Calendar";
-            return View();
+            _viewModel.Events = _dbContext.Events.ToList();
+            return View(_viewModel);
         }
 
 
