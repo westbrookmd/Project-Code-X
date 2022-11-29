@@ -28,18 +28,12 @@
                     <td>@contact.Phone</td>
                     <td>@contact.Email</td>
                     <td>
-                        <form asp-action="Edit" asp-route-id="@contact.ContactId" method="get">
-                            <button type="submit" class="btn btn-sm btn-primary">
+                        <a asp-action="Edit" asp-route-id="@contact.ContactId" method="get" class="btn btn-primary">
                                 Edit
-                            </button>
-                        </form>
+                        </a>
                     </td>
                     <td>
-                        <form asp-action="Delete" asp-route-id="@contact.ContactId" method="post">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Delete
-                            </button>
-                        </form>
+                        <a asp-area="Admin" asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.ContactId" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }
