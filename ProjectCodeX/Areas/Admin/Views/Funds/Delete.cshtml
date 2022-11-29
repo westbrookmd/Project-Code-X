@@ -1,0 +1,25 @@
+﻿@{
+    Purchase purchase = null;
+    if (Model.PurchaseDetail is not null)
+    {
+        purchase = Model.PurchaseDetail;
+    }
+}
+@if (purchase is not null)
+{
+        <h1>Delete Purchase</h1>
+        <h2>Are you sure you wish to delete this purchase? Once done, this action cannot be undone.</h2>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" name="PurchId" />
+            <input type="hidden" name="confirmedDeletion" value="true" />
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()" />
+        </form>
+}
+else
+{
+        <h1>Purchase not found</h1>
+        <a asp-action="Index">Back to List</a>
+}

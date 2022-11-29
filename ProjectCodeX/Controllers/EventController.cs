@@ -1,28 +1,32 @@
 ﻿using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
+using ProjectCodeX.Services;
 using System.Diagnostics;
 using System.Net;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace ProjectCodeX.Controllers
 {
-    [Authorize]
     public class EventController : Controller
     {
         private readonly ILogger _logger;
         private readonly ProjectCodeXContext _dbContext;
         private readonly EventViewModel _viewModel;
+        private readonly EmailSender _emailSender;
 
-        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel)
+        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel, IEmailSender emailSender)
         {
             _logger = logger;
             _dbContext = dbContext;
             _viewModel = viewModel;
+            _emailSender = (EmailSender?)emailSender;
         }
 
         public IActionResult Index()
@@ -36,6 +40,20 @@ namespace ProjectCodeX.Controllers
         {
             _viewModel.Events = _dbContext.Events.ToList();
             return View(_viewModel);
+        }
+        public async Task<IActionResult> Register(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string email = _dbContext.Users.Find(userId).Email;
+            var eventRegistered = _dbContext.Events.Find(id);
+            string additionalDetails = "";
+            if (eventRegistered is not null)
+            {
+                additionalDetails += $" Event Name: {eventRegistered.Name} Date: {eventRegistered.Date} Location: {eventRegistered.Location} Notes: {eventRegistered.Notes}";
+            }
+            await _emailSender.SendEmailAsync(email, "You've been registered!", $"You've been registered for Event {id}! {additionalDetails}");
+
+            return View();
         }
 
 

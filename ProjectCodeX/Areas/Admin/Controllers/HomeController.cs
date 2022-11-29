@@ -68,6 +68,12 @@ namespace ProjectCodeX.Areas.Admin.Controllers
             return File(doc.GeneratePdf(), "application/pdf");
         }
 
+        public FileContentResult FundSummary()
+        {
+            List<Purchase> purchases = _dbContext.Purchases.ToList();
+            FundDocument doc = new(purchases);
+            return File(doc.GeneratePdf(), "application/pdf");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCodeX.Models;
 
@@ -11,9 +12,10 @@ using ProjectCodeX.Models;
 namespace ProjectCodeX.Migrations
 {
     [DbContext(typeof(ProjectCodeXContext))]
-    partial class ProjectCodeXContextModelSnapshot : ModelSnapshot
+    [Migration("20221129021921_Fund_Naming")]
+    partial class Fund_Naming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,26 +366,16 @@ namespace ProjectCodeX.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime?>("PurchDate")
                         .HasColumnType("date");
-
-                    b.Property<string>("PurchName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Qnty")
-                        .HasColumnType("int");
 
                     b.Property<decimal?>("Total")
                         .HasColumnType("smallmoney");
 
                     b.Property<string>("UserId")
-                        .HasMaxLength(500)
+                        .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(500)")
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("UserID");
 
                     b.HasKey("PurchId")

@@ -6,6 +6,10 @@
 
 @{
     User user = await UserManager.GetUserAsync(User);
+    if (user is not null)
+    {
+        await SignInManager.RefreshSignInAsync(user);
+    }
     string firstName;
     if (user == null)
     {
