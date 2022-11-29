@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
+using ProjectCodeX.Services;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
@@ -18,14 +19,14 @@ namespace ProjectCodeX.Controllers
         private readonly ILogger _logger;
         private readonly ProjectCodeXContext _dbContext;
         private readonly EventViewModel _viewModel;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender;
 
         public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel, IEmailSender emailSender)
         {
             _logger = logger;
             _dbContext = dbContext;
             _viewModel = viewModel;
-            _emailSender = emailSender;
+            _emailSender = (EmailSender?)emailSender;
         }
 
         public IActionResult Index()
@@ -40,12 +41,18 @@ namespace ProjectCodeX.Controllers
             _viewModel.Events = _dbContext.Events.ToList();
             return View(_viewModel);
         }
-        public IActionResult Register(int id)
+        public async Task<IActionResult> Register(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             string email = _dbContext.Users.Find(userId).Email;
-            var result = _emailSender.SendEmailAsync("You've been registered!", "You've been registered!", "You've been registered");
-            result.Wait();
+            var eventRegistered = _dbContext.Events.Find(id);
+            string additionalDetails = "";
+            if (eventRegistered is not null)
+            {
+                additionalDetails += $" Event Name: {eventRegistered.Name} Date: {eventRegistered.Date} Location: {eventRegistered.Location} Notes: {eventRegistered.Notes}";
+            }
+            await _emailSender.SendEmailAsync(email, "You've been registered!", $"You've been registered for Event {id}! {additionalDetails}");
+
             return View();
         }
 
