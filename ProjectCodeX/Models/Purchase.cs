@@ -12,7 +12,7 @@ namespace ProjectCodeX.Models
 
         public int PurchId { get; set; }
         public string? UserId { get; set; }
-        public decimal? Price { get; set; }
+        public decimal? Total { get; set; }
         public DateTime? PurchDate { get; set; }
         public string? Notes { get; set; }
 

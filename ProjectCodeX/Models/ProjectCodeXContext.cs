@@ -184,7 +184,7 @@ namespace ProjectCodeX.Models
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Price).HasColumnType("smallmoney");
+                entity.Property(e => e.Total).HasColumnType("smallmoney");
 
                 entity.Property(e => e.PurchDate).HasColumnType("date");
 

@@ -1,4 +1,5 @@
-﻿using ProjectCodeX.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using ProjectCodeX.Models;
 
 namespace ProjectCodeX.Services
 {
@@ -16,10 +17,15 @@ namespace ProjectCodeX.Services
             {
                 using var scope = _scopeFactory.CreateScope();
                 var _dbContext = scope.ServiceProvider.GetService<ProjectCodeXContext>();
-                List<User> usersWhoShouldBeBilledThisMonth = _dbContext.Users.Where(u => u.NextBillDate.Value.Month == DateTime.Now.Month && u.NextBillDate.Value.Day == DateTime.Now.Day).ToList();
-                if (usersWhoShouldBeBilledThisMonth.Count > 0)
+                var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
+                List<User> usersWithTodayAsBillDate = _dbContext.Users.Where(u => u.NextBillDate.Value.Month == DateTime.Now.Month && u.NextBillDate.Value.Day == DateTime.Now.Day).ToList();
+                //TODO: only get members
+                List<User> usersWhoAreMembers = (List<User>)userManager.GetUsersInRoleAsync("Member").Result;
+                List<User> usersWhoShouldBeBilled = usersWithTodayAsBillDate.Where(u => usersWhoAreMembers.Contains(u)).ToList();
+
+                if (usersWhoShouldBeBilled.Count > 0)
                 {
-                    foreach (var user in usersWhoShouldBeBilledThisMonth)
+                    foreach (var user in usersWhoShouldBeBilled)
                     {
                         user.Balance += user.DueTier switch
                         {
@@ -36,7 +42,7 @@ namespace ProjectCodeX.Services
                     _dbContext.SaveChanges();
                 }
                 
-                await Task.Delay(60000, stoppingToken);
+                await Task.Delay(600000, stoppingToken);
             }
         }
     }
