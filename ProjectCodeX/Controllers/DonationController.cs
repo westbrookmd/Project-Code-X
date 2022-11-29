@@ -35,15 +35,13 @@ namespace ProjectCodeX.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    donation.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    donation.DonationDate = DateTime.UtcNow;
-                    var result = _dbContext.Donations.Add(donation);
-                    _dbContext.SaveChanges();
-                    RedirectToAction("Index");
-                    //return Edit(result.Entity.DonationId);
-                }
+                donation.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                donation.DonationDate = DateTime.UtcNow;
+                var result = _dbContext.Donations.Add(donation);
+                _dbContext.SaveChanges();
+                RedirectToAction("Index");
+                //return Edit(result.Entity.DonationId);
                 return RedirectToAction(nameof(Index));
             }
             catch
