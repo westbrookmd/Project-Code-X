@@ -13,7 +13,6 @@ using System.Text.Json;
 
 namespace ProjectCodeX.Controllers
 {
-    [Authorize]
     public class EventController : Controller
     {
         private readonly ILogger _logger;
