@@ -43,7 +43,7 @@
         {
             <a asp-area="Admin" asp-controller="Event" asp-action="Delete" asp-route-id="@eventDetail.EventId" class="btn btn-danger">Delete</a>
         }
-        <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
+        <a asp-area="" asp-controller="Event" asp-action="Index" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 

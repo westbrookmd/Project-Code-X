@@ -113,5 +113,5 @@
         <input type="hidden" id="contactId" name="contactId" value="@contact.ContactId" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <button class="btn btn-secondary" onclick="history.back();">Cancel</button>
+    <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

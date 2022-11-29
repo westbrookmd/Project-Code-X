@@ -8,5 +8,5 @@
     <input type="hidden" name="Id" value="@news.ArticleId"/>
     <input type="hidden" name="confirmedDeletion" value="true"/>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()" />
+    <a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

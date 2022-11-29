@@ -68,7 +68,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                         purchaseDbObject.UserId = userId;
                         _dbContext.Purchases.Update(purchaseDbObject);
                         _dbContext.SaveChanges();
-                        return Edit(purchase.PurchId);
+                        return RedirectToAction("Index", "Funds", new { area = "Admin" });
                     }
                     else
                     {
@@ -76,7 +76,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                         purchase.UserId = userId;
                         var result = _dbContext.Purchases.Add(purchase);
                         _dbContext.SaveChanges();
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Index", "Funds", new { area = "Admin" });
                     }
                 }
                 return RedirectToAction(nameof(Index));

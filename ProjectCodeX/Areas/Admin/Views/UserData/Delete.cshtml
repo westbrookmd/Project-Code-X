@@ -8,5 +8,5 @@
     <input type="hidden" name="Id" value="@user.Id"/>
     <input type="hidden" name="confirmed" value="true"/>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()" />
+    <a asp-area="Admin" asp-controller="UserData" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
