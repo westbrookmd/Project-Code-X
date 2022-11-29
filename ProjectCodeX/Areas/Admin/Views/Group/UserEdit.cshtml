@@ -6,10 +6,21 @@
     {
         group = Model.GroupDetail;
     }
-    List<User> allUsers = userManager.Users.Where(u => !string.IsNullOrEmpty(u.Lname) && !string.IsNullOrEmpty(u.Fname)).ToList();
+    List<User> allUsers = userManager.Users.ToList();
     foreach (User u in group.Users)
     {
         allUsers.Remove(u);
+    }
+    foreach (User u2 in group.Users)
+    {
+        if (u2.Fname is null)
+        {
+            u2.Fname = "";
+        }
+        if (u2.Lname is null)
+        {
+            u2.Lname = "";
+        }
     }
 }
 
@@ -43,7 +54,15 @@
     <select name="id">
         @foreach (User u1 in allUsers)
         {
-            <option value = "@u1.Id">@u1.Lname, @u1.Fname</option>
+            @if (string.IsNullOrEmpty(u1.Lname) || string.IsNullOrEmpty(u1.Fname))
+            {
+                <option value = "@u1.Id">@u1.Email</option>
+            }
+            else
+            {
+                <option value = "@u1.Id">@u1.Lname, @u1.Fname</option>
+            }
+            
         }
     </select>
     <input type="hidden" name="groupId" value="@group.Id" />

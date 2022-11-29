@@ -65,14 +65,14 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
                         _dbContext.Events.Update(eventDbObject);
                         _dbContext.SaveChanges();
-                        return Edit(eventDbObject.EventId);
+                        return RedirectToAction("Details", "Event", new { area = "", id = id });
                     }
                     else
                     {
                         //news object isn't in the database, create a new object
                         var result = _dbContext.Events.Add(e);
                         _dbContext.SaveChanges();
-                        return Edit(result.Entity.EventId);
+                        return RedirectToAction("Details", "Event", new { area = "", id = e.EventId });
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -111,7 +111,7 @@ namespace ProjectCodeX.Areas.Admin.Controllers
                     {
                         _dbContext.Events.Remove(eventDbObject);
                         _dbContext.SaveChanges();
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Index", "Event", new { area=""});
                     }
                     else
                     {

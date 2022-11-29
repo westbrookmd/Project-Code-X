@@ -8,9 +8,10 @@
             @for (int i = 0; i < news.Count; i++)
             {
                 <div class=" = ct-blog col-sm-6 col-md-4">
+                    <a asp-controller="News" asp-action="Article" asp-route-id="@news[i].ArticleId">
                     <div class="inner">
                         <div class="fauxcrop">
-                                <a asp-controller="News" asp-action="Article" asp-route-id="@news[i].ArticleId"><img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" /></a>
+                                <img alt="News Entry" src="~/images/Project_Code-X_Logo.jpg" class="img-fluid card-img" />
                         </div>
                         <div class="ct-blog-content">
                             <div class="ct-blog-date">
@@ -22,6 +23,7 @@
                         </div>
                         <p class="text-center">@news[i].Summary</p>
                     </div>
+                    </a>
                 </div>
             }
         </div>

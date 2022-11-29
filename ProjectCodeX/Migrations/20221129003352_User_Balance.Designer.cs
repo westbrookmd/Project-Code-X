@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCodeX.Models;
 
@@ -11,9 +12,10 @@ using ProjectCodeX.Models;
 namespace ProjectCodeX.Migrations
 {
     [DbContext(typeof(ProjectCodeXContext))]
-    partial class ProjectCodeXContextModelSnapshot : ModelSnapshot
+    [Migration("20221129003352_User_Balance")]
+    partial class User_Balance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,25 +367,15 @@ namespace ProjectCodeX.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("smallmoney");
 
                     b.Property<DateTime?>("PurchDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("PurchName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Qnty")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("Total")
-                        .HasColumnType("smallmoney");
-
                     b.Property<string>("UserId")
-                        .HasMaxLength(500)
+                        .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(500)")
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("UserID");
 
                     b.HasKey("PurchId")
@@ -407,10 +399,6 @@ namespace ProjectCodeX.Migrations
                     b.Property<int?>("PurchId")
                         .HasColumnType("int")
                         .HasColumnName("PurchID");
-
-                    b.Property<string>("PurchName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Qnty")
                         .HasColumnType("int");
@@ -448,9 +436,6 @@ namespace ProjectCodeX.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DueTier")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)

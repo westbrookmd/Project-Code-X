@@ -6,6 +6,10 @@
 
 @{
     User user = await UserManager.GetUserAsync(User);
+    if (user is not null)
+    {
+        await SignInManager.RefreshSignInAsync(user);
+    }
     string firstName;
     if (user == null)
     {
@@ -71,12 +75,13 @@
             </a>
         </div>
         <div id="adminLinks">
-            <a asp-area="Admin" asp-controller="Event" asp-action="Index">Event Management</a><br>
-            <a asp-area="Admin" asp-controller="News" asp-action="Index">News Management</a><br>
-            <a asp-area="Admin" asp-controller="Funds" asp-action="Index">Fund Management</a><br>
-            <a asp-area="Admin" asp-controller="Group" asp-action="Index">Group Management</a><br>
-            <a asp-area="Admin" asp-controller="UserData" asp-action="Index">User Management</a><br>
-            <a asp-area="Admin" asp-controller="Contact" asp-action="Index">Contacts</a>
+            <a asp-area="Admin" asp-controller="Event" asp-action="Index">Event Management</a><br />
+            <a asp-area="Admin" asp-controller="News" asp-action="Index">News Management</a><br />
+            <a asp-area="Admin" asp-controller="Funds" asp-action="Index">Fund Management</a><br />
+            <a asp-area="Admin" asp-controller="Group" asp-action="Index">Group Management</a><br />
+            <a asp-area="Admin" asp-controller="UserData" asp-action="Index">User Management</a><br />
+            <a asp-area="Admin" asp-controller="Contact" asp-action="Index">Contacts</a><br />
+            <a asp-area="Admin" asp-controller="Home" asp-action="Reports">Administrative Reports</a>
         </div>
     </header>
     <div class="container">

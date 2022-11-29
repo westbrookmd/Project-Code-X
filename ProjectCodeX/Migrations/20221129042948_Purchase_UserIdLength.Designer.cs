@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectCodeX.Models;
 
@@ -11,9 +12,10 @@ using ProjectCodeX.Models;
 namespace ProjectCodeX.Migrations
 {
     [DbContext(typeof(ProjectCodeXContext))]
-    partial class ProjectCodeXContextModelSnapshot : ModelSnapshot
+    [Migration("20221129042948_Purchase_UserIdLength")]
+    partial class Purchase_UserIdLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,9 +383,9 @@ namespace ProjectCodeX.Migrations
                         .HasColumnType("smallmoney");
 
                     b.Property<string>("UserId")
-                        .HasMaxLength(500)
+                        .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(500)")
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("UserID");
 
                     b.HasKey("PurchId")

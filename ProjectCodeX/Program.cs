@@ -47,6 +47,8 @@ namespace ProjectCodeX
             builder.Services.AddTransient<DonationViewModel>();
             builder.Services.AddTransient<ContactViewModel>();
             builder.Services.AddTransient<GroupViewModel>();
+            builder.Services.AddTransient<FundViewModel>();
+            builder.Services.AddHostedService<DuesService>();
 
             //Email service setup
             if (!string.IsNullOrEmpty(builder.Configuration.GetValue<string>("SENDGRID_API_KEY")))
@@ -100,6 +102,18 @@ namespace ProjectCodeX
                 {
                     adminRole = new IdentityRole("Admin");
                     var role = roleManager.CreateAsync(adminRole).Result;
+                }
+                var memberRole = roleManager.FindByNameAsync("Member").Result;
+                if (memberRole == null)
+                {
+                    memberRole = new IdentityRole("Member");
+                    var role = roleManager.CreateAsync(memberRole).Result;
+                }
+                var donorRole = roleManager.FindByNameAsync("Donor").Result;
+                if (donorRole == null)
+                {
+                    donorRole = new IdentityRole("Donor");
+                    var role = roleManager.CreateAsync(donorRole).Result;
                 }
                 if (app.Environment.IsDevelopment())
                 {

@@ -1,5 +1,11 @@
-﻿@{
-    News news = Model.NewsDetail;
+﻿@model ProjectCodeX.Models.NewsViewModel
+@{
+    ViewData["Title"] = "Details";
+    News news = null;
+    if (Model.NewsDetail is not null)
+    {
+        news = Model.NewsDetail;
+    }
 }
 <link rel="stylesheet" href="~/css/news.css" />
 
@@ -17,7 +23,8 @@
 </div>
 
 @if(User.IsInRole("Admin")){
-    <a asp-area="Admin" asp-controller="News" asp-action="Edit" class="btn btn-primary" id="@news.ArticleId">Update Article</a>
+    <a asp-area="Admin" asp-controller="News" asp-action="Edit" class="btn btn-primary" asp-route-id="@news.ArticleId">Update Article</a>
+    <a asp-area="Admin" asp-controller="News" asp-action="Delete" asp-route-id="@news.ArticleId" class="btn btn-danger">Delete</a>
 }
 
 <a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-primary">Back to Index</a>

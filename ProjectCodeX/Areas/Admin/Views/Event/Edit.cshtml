@@ -41,7 +41,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
         @if (ViewBag.Status == "Edit")
         {
-            <button type="button" class="btn btn-danger">Delete</button>
+            <a asp-area="Admin" asp-controller="Event" asp-action="Delete" asp-route-id="@eventDetail.EventId" class="btn btn-danger">Delete</a>
         }
         <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
     </form>

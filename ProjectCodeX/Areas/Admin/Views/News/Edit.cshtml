@@ -15,10 +15,10 @@
 
 
         <label for="content">Article content: </label><br />
-        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required value="@news.Content"></textarea><br />
+        <textarea rows="4" cols="50" id="content" name="content" form="newsForm" placeholder="Insert article content here" required>@news.Content</textarea><br />
 
         <label for="content">Article summary: </label><br />
-        <textarea rows="4" cols="50" id="summary" name="summary" form="newsForm" placeholder="Insert a brief summary to appear below the headline on the News Index here" required value="@news.Summary"></textarea>
+        <textarea rows="4" cols="50" id="summary" name="summary" form="newsForm" placeholder="Insert a brief summary to appear below the headline on the News Index here" required>@news.Summary</textarea>
 
 
         <div class="form-group">
@@ -33,7 +33,7 @@
 
         @if (ViewBag.Status == "Edit")
         {
-            <button type="button" class="btn btn-danger">Delete</button>
+            <a asp-area="Admin" asp-controller="News" asp-action="Delete" asp-route-id="@news.ArticleId" class="btn btn-danger">Delete</a>
         }
         <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
     </form>
