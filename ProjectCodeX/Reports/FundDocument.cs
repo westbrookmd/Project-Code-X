@@ -6,26 +6,25 @@ using QuestPDF.Infrastructure;
 
 namespace ProjectCodeX.Reports;
 
-public class DonorDocument : IDocument
+public class FundDocument : IDocument
 {
-    public List<Donation> Model { get; }
-    public decimal TotalAmountDonated { get; }
-    public int UniqueDonors { get; }
-
-    public DonorDocument(List<Donation> model)
+    public List<Purchase> Model { get; }
+    public decimal TotalAmountSpent { get; }
+    public int UniqueUsers { get; }
+    public FundDocument(List<Purchase> model)
     {
         Model = model;
-        decimal? total = model.Sum(d => d.Amount).GetValueOrDefault();
-        int? uniqueDonors = model.DistinctBy(d => d.UserId).Count();
+        decimal? total = model.Sum(d => d.Price).GetValueOrDefault();
+        int? uniqueUsers = model.DistinctBy(d => d.UserId).Count();
+
         if (total is not null)
         {
-            TotalAmountDonated = (decimal)total;
+            TotalAmountSpent = (decimal)total;
         }
-        if (uniqueDonors is not null)
+        if (uniqueUsers is not null)
         {
-            UniqueDonors = (int)uniqueDonors;
+            UniqueUsers = (int)uniqueUsers;
         }
-        
     }
     public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
 
@@ -39,6 +38,7 @@ public class DonorDocument : IDocument
             page.Header().Element(ComposeHeader);
             page.Content().Element(ComposeContent);
 
+
             page.Footer().AlignCenter().Text(x =>
             {
                 x.CurrentPageNumber();
@@ -47,7 +47,6 @@ public class DonorDocument : IDocument
             });
         });
     }
-
     void ComposeContent(IContainer container)
     {
         container.PaddingVertical(40).Column(column =>
@@ -56,7 +55,7 @@ public class DonorDocument : IDocument
 
             column.Item().Element(ComposeTable);
 
-            if (UniqueDonors > 0 || TotalAmountDonated > 0)
+            if (UniqueUsers > 0 || TotalAmountSpent > 0)
                 column.Item().PaddingTop(25).Element(ComposeSummary);
         });
     }
@@ -68,7 +67,7 @@ public class DonorDocument : IDocument
         {
             row.RelativeItem().Column(column =>
             {
-                column.Item().Text($"Donor List").Style(titleStyle);
+                column.Item().Text($"Fund Management Report").Style(titleStyle);
 
                 column.Item().Text(text =>
                 {
@@ -90,16 +89,21 @@ public class DonorDocument : IDocument
                 columns.RelativeColumn();
                 columns.RelativeColumn();
                 columns.RelativeColumn();
+                columns.RelativeColumn();
+                columns.RelativeColumn();
             });
 
             // step 2
             table.Header(header =>
             {
-                header.Cell().Element(CellStyle).Text("Donation Id");
-                header.Cell().Element(CellStyle).Text("User Id");
-                header.Cell().Element(CellStyle).AlignRight().Text("Amount");
-                header.Cell().Element(CellStyle).AlignRight().Text("Donation Date");
-                header.Cell().Element(CellStyle).AlignRight().Text("Notes");
+                header.Cell().Element(CellStyle).Text("Purchase Id");
+                header.Cell().Element(CellStyle).AlignRight().Text("Name");
+                header.Cell().Element(CellStyle).AlignRight().Text("Quantity");
+                header.Cell().Element(CellStyle).AlignRight().Text("Price");
+                header.Cell().Element(CellStyle).AlignRight().Text("Total");
+                header.Cell().Element(CellStyle).AlignRight().Text("Purchase Date");
+                header.Cell().Element(CellStyle).AlignRight().Text("User");
+                
 
                 static IContainer CellStyle(IContainer container)
                 {
@@ -110,18 +114,21 @@ public class DonorDocument : IDocument
             // step 3
             foreach (var item in Model)
             {
-                table.Cell().Element(CellStyle).Text(item.DonationId);
-                table.Cell().Element(CellStyle).Text($"{item.UserId.Substring(0, 8)}");
-                table.Cell().Element(CellStyle).AlignRight().Text($"{item.Amount:C}");
-                table.Cell().Element(CellStyle).AlignRight().Text(item.DonationDate);
-                table.Cell().Element(CellStyle).AlignRight().Text($"{item.Notes}");
+                table.Cell().Element(CellStyle).Text($"{item.PurchId}");
+                table.Cell().Element(CellStyle).AlignRight().Text($"{item.PurchName}");
+                table.Cell().Element(CellStyle).AlignRight().Text($"{item.Qnty}");
+                table.Cell().Element(CellStyle).AlignRight().Text(item.Price);
+                table.Cell().Element(CellStyle).AlignRight().Text($"{item.Total}");
+                table.Cell().Element(CellStyle).AlignRight().Text($"{item.PurchDate}");
+                table.Cell().Element(CellStyle).AlignRight().Text($"{item.UserId.Substring(0, 8)}");
+                
 
                 static IContainer CellStyle(IContainer container)
                 {
                     return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5).PaddingHorizontal(5);
                 }
             }
-        });       
+        });
     }
     void ComposeSummary(IContainer container)
     {
@@ -129,7 +136,7 @@ public class DonorDocument : IDocument
         {
             column.Spacing(5);
             column.Item().Text("Summary").FontSize(14);
-            column.Item().Text($"This donor list has {UniqueDonors} unique donors. The total amount donated is {TotalAmountDonated:C}");
+            column.Item().Text($"This fund management report has {UniqueUsers} unique users. The total amount spent is {TotalAmountSpent:C}");
         });
     }
 }

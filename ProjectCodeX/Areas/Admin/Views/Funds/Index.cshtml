@@ -1,1 +1,53 @@
-﻿<a asp-area="Admin" asp-controller="Funds" asp-action="Update">Click here to add new purchases to the database.</a>
+﻿@{
+    List<Purchase> purchases = Model.Purchases;
+}
+
+<h1>Purchases</h1>
+<a asp-area="Admin" asp-controller="Funds" asp-action="Edit">Click here to add new purchases to the database.</a>
+<br />
+<br />
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Total</td>
+            <td>Date</td>
+            <td>Notes</td>
+            <td>Quantity</td>
+            <td>Price</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (purchases is not null)
+        {
+            @foreach (var purchase in purchases)
+            {
+                        <tr>
+                            <td>@purchase.PurchName</td>
+                            <td>@purchase.Total</td>
+                            <td>@purchase.PurchDate</td>
+                            <td>@purchase.Notes</td>
+                            <td>@purchase.Qnty</td>
+                            <td>@purchase.Price</td>
+                            <td>
+                                <form asp-action="Edit" asp-route-id="@purchase.PurchId" method="get">
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        Edit
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form asp-action="Delete" asp-route-id="@purchase.PurchId" method="post">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+            }
+        }
+    </tbody>
+</table>

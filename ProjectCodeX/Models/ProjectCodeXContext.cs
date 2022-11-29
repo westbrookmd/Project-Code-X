@@ -189,7 +189,6 @@ namespace ProjectCodeX.Models
                 entity.Property(e => e.PurchDate).HasColumnType("date");
 
                 entity.Property(e => e.UserId)
-                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("UserID");
             });

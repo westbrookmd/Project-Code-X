@@ -1,0 +1,35 @@
+﻿@{
+    if (Model.PurchaseDetail == null)
+    {
+        Model.PurchaseDetail = new Purchase();
+    }
+    Purchase purchase = Model.PurchaseDetail;
+}
+
+<form asp-action="Edit" method="post">
+
+        <label for="PurchName">Name: </label>
+    <input type="text" id="PurchName" name="PurchName" class="form-control" value="@purchase.PurchName"/>
+
+    <label for="Qnty">Qnty: </label>
+    <input type="text" id="Qnty" name="Qnty" class="form-control" value="@purchase.Qnty"/>
+
+    <label for="Price">Price: </label>
+    <input type="text" id="Price" name="Price" class="form-control" value="@purchase.Price"/>
+
+    <label for="Total">Total: </label>
+    <input type="text" id="Total" name="Total" class="form-control" value="@purchase.Total"/>
+
+    <label for="PurchDate">Purchase Date: </label>
+    <input type="datetime" id="PurchDate" name="PurchDate" class="form-control" value="@purchase.PurchDate"/>
+
+    <label for="Notes">Notes: </label>
+    <input type="text" id="Notes" name="Notes" class="form-control" value="@purchase.Notes"/>
+
+    <input type="hidden" id="PurchId" name="PurchId" value="@purchase.PurchId" />
+    <input type="hidden" id="UserId" name="UserId" class="form-control" value="@purchase.UserId" />
+    <br />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="button" class="btn btn-secondary" value="Cancel" onclick="history.back()"/>
+</form>

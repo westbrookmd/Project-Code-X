@@ -47,6 +47,7 @@ namespace ProjectCodeX
             builder.Services.AddTransient<DonationViewModel>();
             builder.Services.AddTransient<ContactViewModel>();
             builder.Services.AddTransient<GroupViewModel>();
+            builder.Services.AddTransient<FundViewModel>();
             builder.Services.AddHostedService<DuesService>();
 
             //Email service setup
