@@ -14,5 +14,7 @@ namespace ProjectCodeX.Models
         public string? State { get; set; }
         public string? PayMethod { get; set; }
         public DateTime? NextBillDate { get; set; }
+        public decimal Balance { get; set; }
+        public int DueTier { get; set; }
     }
 }

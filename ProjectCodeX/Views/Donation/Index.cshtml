@@ -1,4 +1,16 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+
+@{
+    User user = await UserManager.GetUserAsync(User);
+    if (user is not null)
+    {
+        await SignInManager.RefreshSignInAsync(user);
+    }
+    bool userIsMember = (User.Identity.IsAuthenticated && User.IsInRole("Member"));
     Donation donation = new();
     int donationCount = 0;
     if (Model.Donations is not null && Model.Donations.Count > 0)
@@ -7,15 +19,6 @@
     }
 }
 
-@if (donationCount > 0)
-{
-    @foreach (Donation d in Model.Donations)
-    {
-        /*
-        put donation display logic here
-        */
-    }
-}
 <div class="donation-Form">
     <form id="donationForm" asp-action="Donate" method="post">
         <br />
@@ -31,6 +34,26 @@
         <br />
         <label>Security Code: </label><br />
         <input type="password" placeholder="Security Code ( DO NOT ENTER)" maxlength="19" size="30"/>
+        <br />
+        <label for="becomeMember" hidden="@userIsMember">Become a member and pay the amount selected per month:</label>
+        @if (userIsMember)
+        {
+            <a asp-action="Unsubscribe" asp-route-userId="@user.Id">Unsubscribe</a>
+        }
+        <br />
+        <label hidden="@userIsMember">Join</label>
+        <input type="radio" name="becomeMember" value="true" hidden="@userIsMember"> 
+        <label hidden="@userIsMember">Don't Join</label>
+        <input type="radio" name="becomeMember" value="false" hidden="@userIsMember">
+        <br />
+        <label hidden="@userIsMember">Due Tier: (Cost per Month)</label>
+        <select name="dueTier" hidden="@userIsMember">
+            <option value = "0">$5</option>
+            <option value = "1">$10</option>
+            <option value = "2">$20</option>
+            <option value = "3">$50</option>
+            <option value = "4">$100</option>
+        </select>
         <br />
         <br />
         <input type="hidden" id="DonationDate" name="DonationDate" value="@DateTime.UtcNow" />
