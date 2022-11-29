@@ -74,7 +74,7 @@ public class UserDataController : Controller
                     _dbContext.Users.Update(userDBObject);
                     _dbContext.SaveChanges();
                 }
-                return Edit(user.Id);
+                return RedirectToAction("Index", "UserData", new { area="Admin" });
             }
             return View(_viewModel);
         }

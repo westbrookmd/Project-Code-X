@@ -27,8 +27,8 @@
                 <td>@u.Lname</td>
                 <td>@u.Fname</td>
                 <td>@u.Email</td>
-                <td><button class="btn btn-primary"><a asp-area="Admin" asp-controller="UserData" asp-action="Edit" asp-route-id="@u.Id" class="text-white">Edit</a></button></td>
-                    <td><button class="btn btn-primary"><a asp-area="Admin" asp-controller="UserData" asp-action="Delete" asp-route-id="@u.Id" class="text-white">Delete</a></button></td>
+                <td><a asp-area="Admin" asp-controller="UserData" asp-action="Edit" asp-route-id="@u.Id" class="btn btn-primary">Edit</a></td>
+                <td><a asp-area="Admin" asp-controller="UserData" asp-action="Delete" asp-route-id="@u.Id" class="btn btn-danger">Delete</a></td>
             </tr>
         }
         </tbody>

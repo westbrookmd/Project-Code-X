@@ -65,14 +65,14 @@ namespace ProjectCodeX.Areas.Admin.Controllers
 
                         _dbContext.Contacts.Update(contactDbObject);
                         _dbContext.SaveChanges();
-                        return Edit(id);
+                        return RedirectToAction("Index", "Contact", new {area="Admin"});
                     }
                     else
                     {
                         //news object isn't in the database, create a new object
                         var result = _dbContext.Contacts.Add(contact);
                         _dbContext.SaveChanges();
-                        return Edit(result.Entity.ContactId);
+                        return RedirectToAction("Index", "Contact", new { area = "Admin" });
                     }
                 }
                 return RedirectToAction(nameof(Index));
