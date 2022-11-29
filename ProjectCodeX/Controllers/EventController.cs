@@ -1,12 +1,14 @@
 ﻿using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol;
 using ProjectCodeX.Data;
 using ProjectCodeX.Models;
 using System.Diagnostics;
 using System.Net;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace ProjectCodeX.Controllers
@@ -17,12 +19,14 @@ namespace ProjectCodeX.Controllers
         private readonly ILogger _logger;
         private readonly ProjectCodeXContext _dbContext;
         private readonly EventViewModel _viewModel;
+        private readonly IEmailSender _emailSender;
 
-        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel)
+        public EventController(ILogger<EventController> logger, ProjectCodeXContext dbContext, EventViewModel viewModel, IEmailSender emailSender)
         {
             _logger = logger;
             _dbContext = dbContext;
             _viewModel = viewModel;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -36,6 +40,14 @@ namespace ProjectCodeX.Controllers
         {
             _viewModel.Events = _dbContext.Events.ToList();
             return View(_viewModel);
+        }
+        public IActionResult Register(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string email = _dbContext.Users.Find(userId).Email;
+            var result = _emailSender.SendEmailAsync("You've been registered!", "You've been registered!", "You've been registered");
+            result.Wait();
+            return View();
         }
 
 

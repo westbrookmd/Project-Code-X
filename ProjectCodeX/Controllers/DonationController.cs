@@ -32,6 +32,16 @@ namespace ProjectCodeX.Controllers
             }
             return View(_viewModel);
         }
+        public IActionResult History()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _viewModel.Donations = _dbContext.Donations.Where(d => d.UserId == currentUserId).ToList();
+            if (_viewModel.Donations is null)
+            {
+                _viewModel.Donations = new List<Donation>();
+            }
+            return View(_viewModel);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Donate(Donation donation, bool becomeMember, int dueTier)
